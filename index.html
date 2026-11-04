@@ -36,7 +36,7 @@ canvas{display:block;width:100%;height:100%;position:absolute;inset:0}
 .funnel{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .stat b{display:block;font:600 22px 'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
 .stat span{font-size:11px;color:var(--muted)}
-.chat{height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.chat{height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
 .msg{font-size:12.5px;line-height:1.4;padding:7px 10px;border-radius:10px;background:var(--panel2);border-left:3px solid var(--c,#555);animation:in .3s ease}
 .msg .who{font:500 11px 'JetBrains Mono',monospace;color:var(--c);margin-bottom:2px}
 .msg .who em{font-style:normal;color:var(--faint)}
@@ -49,6 +49,32 @@ canvas{display:block;width:100%;height:100%;position:absolute;inset:0}
 .agent span{font-size:11px;color:var(--muted)}
 .detail{font-size:13px;color:var(--muted);line-height:1.5;margin-top:10px;min-height:40px}
 .detail strong{color:var(--text)}
+.seg{display:inline-flex;background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:3px}
+.seg button{border:0;background:transparent;padding:6px 14px;border-radius:7px;display:inline-flex;align-items:center;gap:7px}
+.seg button.on{background:#1a2440;color:var(--text)}
+.seg button .dot{width:7px;height:7px;border-radius:50%;background:var(--faint)}
+.seg button.on .dot{background:var(--turtle);box-shadow:0 0 8px var(--turtle);animation:blink 1.6s infinite}
+.drawer h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 0 6px;font-weight:600}
+.drawer ul{list-style:none;margin:0;padding:0 4px 0 0;display:flex;flex-direction:column;gap:5px;max-height:190px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.drawer li{font-size:12.5px;line-height:1.4;color:var(--text);padding:6px 9px;border-radius:8px;background:var(--panel2)}
+.drawer li time{display:block;font:400 10.5px 'JetBrains Mono',monospace;color:var(--faint)}
+.drawer li.q{border-left:3px solid var(--c)}
+.drawer .none{font-size:12.5px;color:var(--faint)}
+.jobs{grid-column:1/-1}
+.jobs table{width:100%;border-collapse:collapse;font-size:13px}
+.jobs th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line)}
+.jobs td{padding:9px 10px;border-bottom:1px solid #141b30;vertical-align:top}
+.jobs td.sc{font:600 13px 'JetBrains Mono',monospace;color:var(--scout)}
+.jobs a{color:var(--text);text-decoration:none}
+.jobs a:hover{text-decoration:underline}
+.jobs .sal{font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;font-size:11.5px;font-weight:500;padding:3px 9px;border-radius:999px;white-space:nowrap;background:#1a2133;color:var(--muted)}
+.pill.applied{background:rgba(74,245,160,.14);color:var(--turtle)}
+.pill.in_progress{background:rgba(74,214,245,.14);color:var(--scout)}
+.pill.waiting_kevin,.pill.kevin_to_apply{background:rgba(255,215,106,.13);color:var(--kevin)}
+.pill.skipped{background:rgba(255,92,108,.10);color:#d07a84}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.filters button{padding:5px 10px;font-size:12px}
 .top{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
 .top li{display:grid;grid-template-columns:36px 1fr;gap:8px;align-items:center;font-size:12.5px}
 .top .sc{font:600 13px 'JetBrains Mono',monospace;text-align:center;border-radius:6px;padding:3px 0;background:#13213a;color:var(--scout)}
@@ -56,6 +82,15 @@ canvas{display:block;width:100%;height:100%;position:absolute;inset:0}
 .top .t div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .top .t small{color:var(--muted)}
 footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
+@media (max-width:700px){
+  .jobs thead{display:none}
+  .jobs table,.jobs tbody,.jobs tr,.jobs td{display:block}
+  .jobs tr{display:grid;grid-template-columns:44px 1fr;gap:2px 8px;padding:10px 0;border-bottom:1px solid #141b30}
+  .jobs td{border:0;padding:0}
+  .jobs td.sc{grid-row:1/5}
+  .jobs td.loc,.jobs td.sal{color:var(--muted);font-size:12px}
+  .jobs td.st{margin-top:4px}
+}
 @media (max-width:900px){
   main{grid-template-columns:1fr;padding:0 16px 16px}
   header{padding:16px 16px 10px}
@@ -68,22 +103,20 @@ footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
 <header>
   <h1>Job Hunt Network<small id="sub">Five agents, one Ledger. Replaying the latest run.</small></h1>
   <div class="controls">
-    <span class="live"><i></i><span id="clock">replay</span></span>
-    <button id="play">Pause</button>
-    <button id="speed">1×</button>
-    <button id="replay">Replay</button>
+    <span class="live" id="clock"></span>
+    <div class="seg"><button id="m-live" class="on"><span class="dot"></span>Live</button><button id="m-replay">Replay</button></div>
   </div>
 </header>
 <main>
   <div class="stage" id="stage"><canvas id="cv"></canvas><div class="caption" id="caption"></div></div>
   <div class="side">
     <div class="card">
-      <h2>Funnel today</h2>
+      <h2>Today</h2>
       <div class="funnel">
         <div class="stat"><b id="s-found">0</b><span>found</span></div>
-        <div class="stat"><b id="s-ready">0</b><span>score 75+</span></div>
-        <div class="stat"><b id="s-skip">0</b><span>skipped</span></div>
+        <div class="stat"><b id="s-ready">0</b><span>score 70+</span></div>
         <div class="stat"><b id="s-applied">0</b><span>applied</span></div>
+        <div class="stat"><b id="s-wait">0</b><span>on Kevin</span></div>
       </div>
     </div>
     <div class="card">
@@ -93,29 +126,30 @@ footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
     <div class="card">
       <h2>The agents</h2>
       <div class="agents" id="agents"></div>
-      <div class="detail" id="detail">Tap an agent to see what it does.</div>
-    </div>
-    <div class="card">
-      <h2>Top matches</h2>
-      <ul class="top" id="top"></ul>
+      <div class="detail drawer" id="detail"></div>
     </div>
   </div>
+  <section class="card jobs">
+    <h2 id="jobs-h">Jobs scoring 70+</h2>
+    <div class="filters" id="filters"></div>
+    <table><thead><tr><th>Score</th><th>Employer</th><th>Role</th><th>Location</th><th>Salary (as posted)</th><th>Status</th></tr></thead><tbody id="jobrows"></tbody></table>
+  </section>
 </main>
-<footer>Built from the job hunt Ledger. Only public posting info is shown here (company, title, score, source); resumes, form answers and keys stay private. Nodes light up when data reaches them; each dot on a line is one job or message moving between agents.</footer>
+<footer>Built from the job hunt Ledger. Only public posting info is shown here (company, title, location, salary as posted, score); resumes, form answers and keys stay private. <b>Live</b> shows what each agent is doing and waiting on now; <b>Replay</b> plays back today's run. Tap an agent for its queue and history.</footer>
 
 <script>
 (async function(){
 const css = n => getComputedStyle(document.documentElement).getPropertyValue('--'+n).trim();
 let DATA;
-try { DATA = await (await fetch('data.json',{cache:'no-store'})).json(); }
-catch(e){ document.getElementById('caption').textContent='Could not load data.json'; return; }
+async function load(){ DATA = await (await fetch('data.json?t='+Date.now(),{cache:'no-store'})).json(); }
+try { await load(); } catch(e){ document.getElementById('caption').textContent='Could not load data.json'; return; }
 
 /* ---------- graph ---------- */
 const AG = {
   captain:{label:'Captain', sub:'orchestrator', role:'Runs the day in order: search, score, tailor, ask Kevin, fill, track. Enforces caps and budgets.'},
   scout:{label:'Scout', sub:'job-matcher', role:'Searches Indeed and Dice, dedupes against the Ledger and scores every job 0 to 100.'},
   tailor:{label:'Tailor', sub:'resume-tailor', role:'Writes a truthful, ATS-friendly resume for each top job, using only real experience.'},
-  turtle:{label:'Turtle', sub:'form-filler', role:'Fills approved applications at a human pace and stops before Submit.'},
+  turtle:{label:'Turtle', sub:'form-filler', role:'Fills applications at a human pace and stops to ask Kevin when a form needs him.'},
   scribe:{label:'Scribe', sub:'status-tracker', role:'Reads recruiter emails, labels them and keeps statuses in the Ledger honest.'},
 };
 const NODES = {
@@ -124,14 +158,13 @@ const NODES = {
   ledger:{label:'Ledger', kind:'store', c:'ledger'}, tailor:{label:'Tailor', kind:'agent', c:'tailor'},
   kevin:{label:'Kevin', kind:'human', c:'kevin'}, turtle:{label:'Turtle', kind:'agent', c:'turtle'}, scribe:{label:'Scribe', kind:'agent', c:'scribe'},
 };
-const WIDE = {indeed:[.07,.2],dice:[.07,.5],gmail:[.07,.82],scout:[.27,.4],captain:[.5,.22],ledger:[.5,.66],tailor:[.72,.18],kevin:[.72,.52],turtle:[.92,.34],scribe:[.9,.8]};
+const WIDE = {indeed:[.07,.2],dice:[.07,.5],gmail:[.07,.82],scout:[.27,.4],captain:[.5,.22],ledger:[.5,.66],tailor:[.72,.12],kevin:[.72,.5],turtle:[.93,.3],scribe:[.9,.8]};
 const TALL = {indeed:[.18,.07],dice:[.5,.07],gmail:[.84,.07],scout:[.32,.25],captain:[.22,.47],ledger:[.7,.45],tailor:[.18,.68],kevin:[.55,.68],turtle:[.3,.92],scribe:[.78,.9]};
 const EDGES = [['indeed','scout'],['dice','scout'],['gmail','scout'],['captain','scout'],['scout','captain'],['scout','ledger'],
   ['ledger','captain'],['captain','tailor'],['tailor','ledger'],['captain','kevin'],['kevin','captain'],['captain','turtle'],
-  ['turtle','ledger'],['gmail','scribe'],['scribe','ledger'],['scribe','captain']];
+  ['turtle','ledger'],['turtle','kevin'],['kevin','turtle'],['gmail','scribe'],['scribe','ledger'],['scribe','captain']];
 const E = {}; EDGES.forEach(([a,b],i)=>{ E[a+'>'+b]={a,b,heat:0,bend:(i%2?1:-1)*.12}; });
-// paired opposite edges bend opposite ways so both are visible
-E['scout>captain'].bend=.18; E['captain>scout'].bend=.18; E['kevin>captain'].bend=.2; E['captain>kevin'].bend=.2;
+[['scout','captain'],['kevin','captain'],['turtle','kevin']].forEach(([a,b])=>{ E[a+'>'+b].bend=.2; E[b+'>'+a].bend=.2; });
 
 const cv = document.getElementById('cv'), ctx = cv.getContext('2d'), stage = document.getElementById('stage');
 let W=0,H=0,DPR=1,tall=false;
@@ -147,10 +180,8 @@ window.addEventListener('resize', resize);
 
 /* ---------- background neural mesh ---------- */
 let mesh=[], sparks=[];
-function initMesh(){
-  const n = Math.round(W*H/9000); mesh=[];
-  for(let i=0;i<n;i++) mesh.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.08,vy:(Math.random()-.5)*.08});
-}
+function initMesh(){ const n = Math.round(W*H/9000); mesh=[];
+  for(let i=0;i<n;i++) mesh.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.08,vy:(Math.random()-.5)*.08}); }
 function drawMesh(dt){
   ctx.lineWidth=.6;
   for(const p of mesh){ p.x+=p.vx*dt*.06; p.y+=p.vy*dt*.06; if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1; }
@@ -165,13 +196,11 @@ function drawMesh(dt){
 }
 
 /* ---------- geometry ---------- */
-function ctrl(e){ const A=NODES[e.a],B=NODES[e.b]; const mx=(A.x+B.x)/2,my=(A.y+B.y)/2,dx=B.x-A.x,dy=B.y-A.y;
-  return [mx - dy*e.bend, my + dx*e.bend]; }
-function pt(e,t){ const A=NODES[e.a],B=NODES[e.b],[cx,cy]=ctrl(e),u=1-t;
-  return [u*u*A.x+2*u*t*cx+t*t*B.x, u*u*A.y+2*u*t*cy+t*t*B.y]; }
+function ctrl(e){ const A=NODES[e.a],B=NODES[e.b]; const mx=(A.x+B.x)/2,my=(A.y+B.y)/2,dx=B.x-A.x,dy=B.y-A.y; return [mx - dy*e.bend, my + dx*e.bend]; }
+function pt(e,t){ const A=NODES[e.a],B=NODES[e.b],[cx,cy]=ctrl(e),u=1-t; return [u*u*A.x+2*u*t*cx+t*t*B.x, u*u*A.y+2*u*t*cy+t*t*B.y]; }
 
 /* ---------- packets & scheduler ---------- */
-let packets=[], simT=0, queue=[], speed=1, playing=true;
+let packets=[], simT=0, queue=[], mode='live';
 function at(t,fn){ queue.push({t,fn}); }
 function send(a,b,opt={},done){
   const e=E[a+'>'+b]; if(!e) return;
@@ -179,89 +208,160 @@ function send(a,b,opt={},done){
 }
 function hex2rgba(h,a){ const n=parseInt(h.replace('#',''),16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`; }
 
-/* ---------- UI: chat, stats ---------- */
+/* ---------- UI helpers ---------- */
 const chat=document.getElementById('chat'), cap=document.getElementById('caption');
-function say(from,to,text){
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmtT = iso => new Date(iso).toLocaleString('en-US',{timeZone:'America/New_York',weekday:'short',hour:'numeric',minute:'2-digit'})+' ET';
+function say(from,to,text,time){
   const c=css(NODES[from]?.c||'muted');
   const d=document.createElement('div'); d.className='msg'; d.style.setProperty('--c',c);
-  d.innerHTML=`<div class="who">${NODES[from].label}<em> → ${NODES[to].label}</em></div>`; d.append(text);
+  d.innerHTML=`<div class="who">${NODES[from].label}<em> → ${NODES[to].label}${time?' · '+fmtT(time):''}</em></div>`; d.append(text);
   chat.append(d); while(chat.children.length>80) chat.firstChild.remove(); chat.scrollTop=chat.scrollHeight;
   cap.textContent=`${NODES[from].label} → ${NODES[to].label}: ${text}`;
 }
-const S={found:0,ready:0,skip:0,applied:0};
-function stat(k,v){ S[k]=v; document.getElementById('s-'+k).textContent=v; }
+function stat(k,v){ document.getElementById('s-'+k).textContent=v; }
+function liveStats(){ const C=DATA.counts; stat('found',C.found); stat('ready',C.scored70); stat('applied',C.applied); stat('wait',C.waiting_kevin); }
 
-/* ---------- the script: replay of the latest real run ---------- */
-const jobs = DATA.jobs.slice();
-const C = DATA.counts;
-function buildRun(){
-  queue=[]; packets=[]; simT=0; chat.innerHTML=''; ['found','ready','skip','applied'].forEach(k=>stat(k,0));
-  let t=300;
+/* ---------- REPLAY: today's run ---------- */
+function buildReplay(){
+  queue=[]; packets=[]; simT=0; chat.innerHTML=''; ['found','ready','applied','wait'].forEach(k=>stat(k,0));
+  const C=DATA.counts, S={found:0,ready:0}; let t=300;
   at(t,()=>{ send('captain','scout',{label:'start run',size:4}); say('captain','scout','Morning run: Business Analyst + Senior BA, remote and US-wide, posted in the last day.'); });
   t+=1400;
-  at(t,()=>{ send('ledger','captain',{label:'state',size:3.5}); say('ledger','captain','Loaded criteria, caps and yesterday\'s Ledger for dedupe.'); });
+  at(t,()=>{ send('ledger','captain',{label:'state',size:3.5}); say('ledger','captain','Loaded criteria, caps and the Ledger for dedupe.'); });
   t+=1300;
-  // stream jobs: Indeed first, then Dice (shuffled within source so scores vary)
-  const order = ['Indeed','Dice'].flatMap(s=>jobs.filter(j=>j.source===s).sort(()=>Math.random()-.5));
+  const order = ['Indeed','Dice'].flatMap(s=>DATA.jobs.filter(j=>j.source===s).sort(()=>Math.random()-.5));
   let lastSrc=null;
   order.forEach(j=>{
     const src = j.source==='Indeed'?'indeed':'dice';
-    if(src!==lastSrc){ const s=src; at(t,()=>say('scout',s, s==='indeed'?'Searching Indeed through Firecrawl…':'Searching Dice through the Dice connector…')); t+=600; lastSrc=src; }
-    const skipped = j.status==='skipped', hot = j.score>=75 && !skipped;
+    if(src!==lastSrc){ const s=src; at(t,()=>say('scout',s, s==='indeed'?'Searching Indeed…':'Searching Dice…')); t+=500; lastSrc=src; }
+    const skipped = j.status==='skipped', hot = j.score>=70 && !skipped;
     at(t,()=>{
-      send(src,'scout',{dur:900,color:css('source'),size:2.2},()=>{
-        stat('found',S.found+1);
-        const col = skipped?css('bad'):hot?css('scout'):'#3f6f8f';
-        send('scout','ledger',{dur:1000,color:col,size:hot?3.6:2.4},()=>{
-          if(skipped){ stat('skip',S.skip+1); say('scout','ledger',`Skipped ${j.company} · ${j.title} (deal-breaker in the posting)`); }
-          else if(hot){ stat('ready',S.ready+1); say('scout','ledger',`${j.score} · ${j.company} · ${j.title}`); }
+      send(src,'scout',{dur:800,color:css('source'),size:2.2},()=>{
+        stat('found',++S.found);
+        send('scout','ledger',{dur:900,color:skipped?css('bad'):hot?css('scout'):'#3f6f8f',size:hot?3.6:2.4},()=>{
+          if(skipped) say('scout','ledger',`Skipped ${j.company} · ${j.title} (deal-breaker in the posting)`);
+          else if(hot){ stat('ready',++S.ready); say('scout','ledger',`${j.score} · ${j.company} · ${j.title}`); }
         });
       });
     });
-    t += hot||skipped ? 330 : 140;
+    t += hot||skipped ? 260 : 90;
   });
-  t+=2200;
-  at(t,()=>{ send('scout','captain',{label:'report',size:4}); say('scout','captain',`${C.found} jobs found, ${C.ready} score 75+, ${C.skipped} skipped.`); });
-  t+=1600;
-  at(t,()=>{ send('captain','tailor',{label:`${C.ready} queued`,size:4}); say('captain','tailor',`${C.ready} jobs queued for tailoring. Hold until Kevin says go.`); });
+  t+=2000;
+  at(t,()=>{ send('scout','captain',{label:'report',size:4}); say('scout','captain',`${C.found} jobs found, ${C.scored70} score 70+, ${C.skipped} skipped.`); });
   t+=1500;
-  at(t,()=>{ send('captain','kevin',{label:'digest',size:4.5}); say('captain','kevin',`${C.ready} strong matches ready. Want me to tailor resumes for them?`); });
-  t+=1800;
-  at(t,()=>{ send('captain','turtle',{label:'standby',size:3,color:'#3b4466'}); say('captain','turtle', C.approved? `${C.approved} approved applications to fill.` : 'Nothing approved yet. Standing by (fill-only mode).'); });
+  at(t,()=>{ send('captain','tailor',{label:`${C.scored70} to tailor`,size:4}); say('captain','tailor',`Tailor resumes for the ${C.scored70} jobs scoring 70+.`); });
+  t+=1500;
+  at(t,()=>{ send('tailor','ledger',{label:`${C.tailored} resumes`,size:4}); say('tailor','ledger',`${C.tailored} tailored resumes saved, each with a change log.`); });
+  t+=1500;
+  at(t,()=>{ send('captain','kevin',{label:'review',size:4.5}); say('captain','kevin','Resumes are ready for your review.'); });
+  t+=1500;
+  at(t,()=>{ send('kevin','captain',{label:'go',size:4.5}); say('kevin','captain','Submit them.'); });
   t+=1300;
-  at(t,()=>{ send('gmail','scribe',{label:'inbox',size:3}); say('scribe','gmail','No applications sent yet, so no replies to track.'); });
+  at(t,()=>{ send('captain','turtle',{label:'apply',size:4}); say('captain','turtle','Fill the approved applications, one at a time.'); });
+  t+=1500;
+  at(t,()=>{ send('turtle','kevin',{label:'questions',size:4}); say('turtle','kevin','A few forms need answers only you can give.'); });
+  t+=1500;
+  at(t,()=>{ send('kevin','turtle',{label:'answers',size:4}); say('kevin','turtle','Here are my answers.'); });
   t+=1400;
-  at(t,()=>{ send('scribe','ledger',{size:3}); stat('applied',C.applied); say('scribe','ledger','Statuses unchanged. Dashboard refreshed.'); });
-  t+=6000;
-  at(t,()=>buildRun());
+  at(t,()=>{ send('turtle','ledger',{label:'applied',size:5,color:css('turtle')}); stat('applied',C.applied); stat('wait',C.waiting_kevin);
+    const a=DATA.top.filter(j=>j.status==='applied').map(j=>j.company).join(', ');
+    say('turtle','ledger',`Submitted: ${a||'none yet'}. ${C.in_progress} in progress.`); });
+  t+=1500;
+  at(t,()=>{ send('gmail','scribe',{label:'inbox',size:3}); say('scribe','gmail','First inbox check is on the next morning run.'); });
+  t+=4000;
+  at(t,()=>setMode('live'));
 }
 
-/* ---------- agents panel ---------- */
-const STATUS_TXT = {active:'active',done:'done for today',waiting:'waiting on Kevin',idle:'idle'};
-const agentsEl=document.getElementById('agents'), detail=document.getElementById('detail');
-let selected=null;
-Object.entries(AG).forEach(([k,a])=>{
-  const d=document.createElement('div'); d.className='agent'; d.style.setProperty('--c',css(NODES[k].c));
-  d.innerHTML=`<i></i><div><b>${a.label}</b><span>${STATUS_TXT[DATA.agents[k]]||''}</span></div>`;
-  d.onclick=()=>select(k); agentsEl.append(d); a.el=d;
-});
-function select(k){ selected = selected===k?null:k;
-  Object.entries(AG).forEach(([kk,a])=>a.el.classList.toggle('sel',kk===selected));
-  detail.innerHTML = selected? `<strong>${AG[k].label}</strong> <span style="font-family:JetBrains Mono,monospace;font-size:11px">${AG[k].sub}</span><br>${AG[k].role}` : 'Tap an agent to see what it does.'; }
-cv.addEventListener('click',ev=>{ const r=cv.getBoundingClientRect(),x=ev.clientX-r.left,y=ev.clientY-r.top;
-  for(const k in AG){ const n=NODES[k]; if(Math.hypot(n.x-x,n.y-y)<34){ select(k); return; } } });
+/* ---------- LIVE: current state ---------- */
+// Each pending item becomes a packet looping on the edge it is waiting on.
+function liveEdgesFor(k,item){
+  const s=item.toLowerCase();
+  if(k==='turtle') return /kevin|account|code|clicks|answer|login/.test(s) ? ['turtle','kevin'] : ['captain','turtle'];
+  if(k==='captain') return /kevin|decide|question/.test(s) ? ['captain','kevin'] : ['captain','scout'];
+  if(k==='scout') return ['captain','scout'];
+  if(k==='scribe') return ['gmail','scribe'];
+  return ['captain',k];
+}
+let liveTick=0;
+function buildLive(){
+  queue=[]; packets=[]; simT=0; chat.innerHTML=''; liveStats();
+  const all=[];
+  for(const k in DATA.agents) for(const h of DATA.agents[k].history||[]) all.push({k,...h});
+  all.sort((a,b)=>a.at<b.at?-1:1).slice(-14).forEach(h=>say(h.k, h.k==='turtle'||h.k==='tailor'||h.k==='scout'?'ledger':'kevin', h.text, h.at));
+  const w=DATA.counts.waiting_kevin;
+  cap.textContent = w? `${w} items waiting on Kevin · updated ${fmtT(DATA.updated)}` : `Updated ${fmtT(DATA.updated)}`;
+}
+function liveFrame(dt){
+  liveTick+=dt;
+  if(liveTick<900) return; liveTick=0;
+  // pick a random pending item and pulse it along its edge
+  const items=[]; for(const k in DATA.agents) for(const q of DATA.agents[k].queue||[]) items.push([k,q]);
+  if(items.length && Math.random()<.85){
+    const [k,q]=items[Math.floor(Math.random()*items.length)], [a,b]=liveEdgesFor(k,q);
+    const short=q.split(':')[0].slice(0,26);
+    send(a,b,{label:Math.random()<.5?short:null,size:3,dur:1700,color:css(NODES[k==='captain'?'captain':k].c)});
+  }
+  if(Math.random()<.4) send('ledger','captain',{size:1.8,color:'#6b7a9e',dur:1600});
+  if(DATA.agents.turtle?.status==='active' && Math.random()<.35) send('turtle','ledger',{size:2.2,dur:1300});
+}
 
-/* ---------- top matches ---------- */
-document.getElementById('top').innerHTML = jobs.filter(j=>j.status!=='skipped').slice(0,8).map(j=>
-  `<li><span class="sc">${j.score}</span><div class="t"><div>${esc(j.company)}</div><div><small>${esc(j.title)} · ${esc(j.source)}${j.remote?' · remote':''}</small></div></div></li>`).join('');
-function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-document.getElementById('sub').textContent = `Five agents, one Ledger. Replaying the run from ${DATA.run_date}.`;
+function setMode(m){
+  mode=m; document.getElementById('m-live').classList.toggle('on',m==='live'); document.getElementById('m-replay').classList.toggle('on',m==='replay');
+  if(m==='live') buildLive(); else buildReplay();
+}
+document.getElementById('m-live').onclick=()=>setMode('live');
+document.getElementById('m-replay').onclick=()=>setMode('replay');
+
+/* ---------- agents panel ---------- */
+const STATUS_TXT = {active:'working',done:'done for today',waiting:'waiting on Kevin',idle:'idle'};
+const agentsEl=document.getElementById('agents'), detail=document.getElementById('detail');
+let selected='turtle';
+function renderAgents(){
+  agentsEl.innerHTML='';
+  Object.entries(AG).forEach(([k,a])=>{
+    const st=DATA.agents[k]||{}, n=(st.queue||[]).length;
+    const d=document.createElement('div'); d.className='agent'+(k===selected?' sel':''); d.style.setProperty('--c',css(NODES[k].c));
+    d.innerHTML=`<i></i><div><b>${a.label}</b><span>${STATUS_TXT[st.status]||''}${n?` · ${n} pending`:''}</span></div>`;
+    d.onclick=()=>select(k); agentsEl.append(d);
+  });
+  const k=selected, st=DATA.agents[k]||{}, c=css(NODES[k].c);
+  detail.style.setProperty('--c',c);
+  const q=(st.queue||[]).map(x=>`<li class="q">${esc(x)}</li>`).join('') || '<div class="none">Nothing pending.</div>';
+  const h=(st.history||[]).slice().sort((a,b)=>a.at<b.at?1:-1).map(x=>`<li><time>${fmtT(x.at)}</time>${esc(x.text)}</li>`).join('') || '<div class="none">No actions yet.</div>';
+  detail.innerHTML=`<strong style="color:${c}">${AG[k].label}</strong> <span style="font-family:JetBrains Mono,monospace;font-size:11px">${AG[k].sub}</span><br>${AG[k].role}
+    <h3>Pending (${(st.queue||[]).length})</h3><ul>${q}</ul><h3>Past actions</h3><ul>${h}</ul>`;
+}
+function select(k){ selected=k; renderAgents(); NODES[k].act=1; }
+cv.addEventListener('click',ev=>{ const r=cv.getBoundingClientRect(),x=ev.clientX-r.left,y=ev.clientY-r.top;
+  for(const k in AG){ const n=NODES[k]; if(Math.hypot(n.x-x,n.y-y)<34){ select(k); if(innerWidth<900) detail.scrollIntoView({behavior:'smooth',block:'center'}); return; } } });
+
+/* ---------- jobs table ---------- */
+const ST = {applied:'Applied',in_progress:'Applying now',waiting_kevin:'Waiting on Kevin',kevin_to_apply:'Kevin applies (Easy Apply)',queued:'Queued',ready:'Ready to apply',skipped:'Skipped',scored:'Scored'};
+let filt='all';
+function renderJobs(){
+  const top=DATA.top, cnt=s=>top.filter(j=>s==='all'||(s==='open'?!['applied','skipped'].includes(j.status):j.status===s)).length;
+  document.getElementById('jobs-h').textContent=`Jobs scoring 70+ (${top.length})`;
+  document.getElementById('filters').innerHTML=[['all','All'],['applied','Applied'],['open','Not applied yet'],['skipped','Skipped']]
+    .map(([k,l])=>`<button data-f="${k}" class="${k===filt?'on':''}">${l} · ${cnt(k)}</button>`).join('');
+  document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{filt=b.dataset.f; renderJobs();});
+  const rows=top.filter(j=>filt==='all'||(filt==='open'?!['applied','skipped'].includes(j.status):j.status===filt));
+  document.getElementById('jobrows').innerHTML=rows.map(j=>`<tr>
+    <td class="sc">${j.score}</td><td>${esc(j.company)}</td>
+    <td>${j.url?`<a href="${esc(j.url)}" target="_blank" rel="noopener">${esc(j.title)}</a>`:esc(j.title)}</td>
+    <td class="loc">${esc(j.location)}</td><td class="sal">${esc(j.salary)}</td>
+    <td class="st"><span class="pill ${j.status}">${ST[j.status]||esc(j.status)}</span></td></tr>`).join('');
+}
+
+function renderAll(){
+  document.getElementById('sub').textContent = `Five agents, one Ledger. Last update ${fmtT(DATA.updated)}${DATA.next_run?` · next run ${fmtT(DATA.next_run)}`:''}.`;
+  renderAgents(); renderJobs(); if(mode==='live') buildLive();
+}
 
 /* ---------- render ---------- */
 function drawEdges(){
   for(const k in E){ const e=E[k],A=NODES[e.a],B=NODES[e.b],[cx,cy]=ctrl(e);
-    const g=ctx.createLinearGradient(A.x,A.y,B.x,B.y);
-    const a=.10+e.heat*.5;
+    const g=ctx.createLinearGradient(A.x,A.y,B.x,B.y), a=.10+e.heat*.5;
     g.addColorStop(0,hex2rgba(css(A.c),a)); g.addColorStop(1,hex2rgba(css(B.c),a));
     ctx.strokeStyle=g; ctx.lineWidth=1+e.heat*1.8;
     ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.quadraticCurveTo(cx,cy,B.x,B.y); ctx.stroke();
@@ -269,31 +369,27 @@ function drawEdges(){
   }
 }
 function drawNodes(now){
-  for(const k in NODES){ const n=NODES[k], col=css(n.c), st=DATA.agents[k];
+  for(const k in NODES){ const n=NODES[k], col=css(n.c), st=DATA.agents[k]?.status;
     const base = n.kind==='agent'?20:n.kind==='store'?22:n.kind==='human'?17:14;
-    const pulse = Math.sin(now/700 + n.x)*.5+.5;
-    const r = base + n.act*7;
-    // halo
-    const glow = .18 + n.act*.55 + (st==='active'?pulse*.15:0) + (st==='waiting'?pulse*.25:0);
+    const pulse = Math.sin(now/700 + n.x)*.5+.5, r = base + n.act*7;
+    const dim = st==='idle'||st==='done' ? .55 : 1;
+    const glow = (.18 + n.act*.55 + (st==='active'?pulse*.25:0) + (st==='waiting'?pulse*.25:0))*dim;
     const g=ctx.createRadialGradient(n.x,n.y,r*.3,n.x,n.y,r*3.2);
     g.addColorStop(0,hex2rgba(col,glow)); g.addColorStop(1,hex2rgba(col,0));
     ctx.fillStyle=g; ctx.beginPath(); ctx.arc(n.x,n.y,r*3.2,0,7); ctx.fill();
-    // body
-    ctx.fillStyle='#0b1020'; ctx.strokeStyle=hex2rgba(col,.55+n.act*.45); ctx.lineWidth=2;
+    ctx.fillStyle='#0b1020'; ctx.strokeStyle=hex2rgba(col,(.55+n.act*.45)*dim); ctx.lineWidth=k===selected?3:2;
     ctx.beginPath();
-    if(n.kind==='store'){ ctx.roundRect(n.x-r,n.y-r*.75,r*2,r*1.5,6); }
-    else if(n.kind==='src'){ ctx.roundRect(n.x-r,n.y-r,r*2,r*2,5); }
+    if(n.kind==='store') ctx.roundRect(n.x-r,n.y-r*.75,r*2,r*1.5,6);
+    else if(n.kind==='src') ctx.roundRect(n.x-r,n.y-r,r*2,r*2,5);
     else ctx.arc(n.x,n.y,r,0,7);
     ctx.fill(); ctx.stroke();
-    // core
-    ctx.fillStyle=hex2rgba(col,.35+n.act*.65); ctx.beginPath(); ctx.arc(n.x,n.y,r*.38,0,7); ctx.fill();
-    // waiting ring
-    if(st==='waiting'){ ctx.strokeStyle=hex2rgba(col,.7); ctx.lineWidth=1.5; ctx.setLineDash([4,5]); ctx.lineDashOffset=-now/60;
+    ctx.fillStyle=hex2rgba(col,(.35+n.act*.65)*dim); ctx.beginPath(); ctx.arc(n.x,n.y,r*.38,0,7); ctx.fill();
+    if(st==='waiting'||st==='active'||k===selected){ ctx.strokeStyle=hex2rgba(col,k===selected?.9:.6); ctx.lineWidth=1.5; ctx.setLineDash([4,5]); ctx.lineDashOffset=-now/60;
       ctx.beginPath(); ctx.arc(n.x,n.y,r+8,0,7); ctx.stroke(); ctx.setLineDash([]); }
-    // label
     ctx.font='600 12px Inter, sans-serif'; ctx.textAlign='center'; ctx.fillStyle='#e6ebf5';
     ctx.fillText(n.label,n.x,n.y+r+18);
-    if(AG[k]){ ctx.font='400 10px "JetBrains Mono", monospace'; ctx.fillStyle=hex2rgba(col,.8); ctx.fillText(STATUS_TXT[st]||'',n.x,n.y+r+31); }
+    if(AG[k]){ const q=(DATA.agents[k]?.queue||[]).length; ctx.font='400 10px "JetBrains Mono", monospace'; ctx.fillStyle=hex2rgba(col,.85);
+      ctx.fillText((STATUS_TXT[st]||'')+(q?` · ${q}`:''),n.x,n.y+r+31); }
     n.act*=.94;
   }
 }
@@ -302,9 +398,8 @@ function drawPackets(dt){
     p.t += dt/p.dur;
     if(p.t>=1){ NODES[p.e.b].act=Math.min(1,NODES[p.e.b].act+.5); p.done&&p.done(); return false; }
     p.e.heat=Math.min(1,p.e.heat+.08);
-    // trail
     for(let i=6;i>=0;i--){ const tt=Math.max(0,p.t-i*.025),[x,y]=pt(p.e,tt);
-      ctx.fillStyle=hex2rgba(p.color.startsWith('#')?p.color:'#8899cc',(1-i/7)*.8); ctx.beginPath(); ctx.arc(x,y,p.size*(1-i/9),0,7); ctx.fill(); }
+      ctx.fillStyle=hex2rgba(p.color,(1-i/7)*.8); ctx.beginPath(); ctx.arc(x,y,p.size*(1-i/9),0,7); ctx.fill(); }
     const [x,y]=pt(p.e,p.t);
     const g=ctx.createRadialGradient(x,y,0,x,y,p.size*5); g.addColorStop(0,hex2rgba(p.color,.6)); g.addColorStop(1,hex2rgba(p.color,0));
     ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,p.size*5,0,7); ctx.fill();
@@ -315,25 +410,22 @@ function drawPackets(dt){
     return true;
   });
 }
-let last=performance.now(), ambient=0;
+let last=performance.now();
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 function frame(now){
-  const raw=Math.min(50,now-last); last=now; const dt=playing?raw*speed:0;
-  if(playing){ simT+=dt; queue.sort((a,b)=>a.t-b.t); while(queue.length&&queue[0].t<=simT) queue.shift().fn();
-    ambient+=dt; if(ambient>2600){ ambient=0; send('ledger','captain',{size:1.8,color:'#6b7a9e',dur:1600}); } }
+  const raw=Math.min(50,now-last); last=now; const dt=raw*(mode==='replay'&&reduce?4:1);
+  simT+=dt; queue.sort((a,b)=>a.t-b.t); while(queue.length&&queue[0].t<=simT) queue.shift().fn();
+  if(mode==='live') liveFrame(dt);
   ctx.clearRect(0,0,W,H);
   drawMesh(raw); drawEdges(); drawPackets(dt); drawNodes(now);
-  document.getElementById('clock').textContent = playing?'replaying':'paused';
+  document.getElementById('clock').textContent = mode==='live' ? `updated ${fmtT(DATA.updated)}` : 'replaying today';
   requestAnimationFrame(frame);
 }
 
-/* ---------- controls ---------- */
-const pb=document.getElementById('play'), sb=document.getElementById('speed');
-pb.onclick=()=>{ playing=!playing; pb.textContent=playing?'Pause':'Play'; };
-sb.onclick=()=>{ speed = speed===1?2:speed===2?4:1; sb.textContent=speed+'×'; };
-document.getElementById('replay').onclick=()=>buildRun();
-if(matchMedia('(prefers-reduced-motion: reduce)').matches){ speed=4; sb.textContent='4×'; }
+// refresh data every minute so Live follows new pushes
+setInterval(async()=>{ const before=DATA.updated; try{ await load(); if(DATA.updated!==before) renderAll(); }catch(e){} }, 60000);
 
-resize(); buildRun(); requestAnimationFrame(frame);
+resize(); renderAll(); requestAnimationFrame(frame);
 })();
 </script>
 </body>

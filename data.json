@@ -1,1149 +1,1122 @@
 {
- "generated": "2026-11-04T16:30:00Z",
+ "updated": "2026-11-04T17:42:00Z",
+ "next_run": "2026-11-05T12:23:00Z",
  "run_date": "2026-11-04",
- "thresholds": {
-  "tailor": 75
- },
  "counts": {
   "found": 111,
-  "scored": 101,
   "skipped": 10,
   "ready": 17,
-  "tailored": 0,
-  "approved": 0,
-  "filled": 0,
-  "applied": 0,
-  "interviewing": 0,
-  "offer": 0
- },
- "by_source": {
-  "Indeed": 51,
-  "Dice": 60
- },
- "by_route": {
-  "Company site": 57,
-  "Dice Easy Apply": 46,
-  "iCIMS": 4,
-  "Workday": 3,
-  "Greenhouse": 1
+  "scored70": 19,
+  "tailored": 19,
+  "applied": 1,
+  "in_progress": 1,
+  "waiting_kevin": 12
  },
  "agents": {
-  "captain": "active",
-  "scout": "done",
-  "tailor": "waiting",
-  "turtle": "idle",
-  "scribe": "idle"
+  "captain": {
+   "status": "waiting",
+   "queue": [
+    "Robert Half: one screening question for Kevin (step 3 of 6)",
+    "Decide on Kforce (on-site contract, marketing opt-in)",
+    "Decide whether Turtle may use the saved Harbor Freight login",
+    "Next weekday run: Thu 7:23 AM ET"
+   ],
+   "history": [
+    {
+     "at": "2026-11-04T16:00:00Z",
+     "text": "Set up the crew: criteria, answers, five agent skills and the Ledger"
+    },
+    {
+     "at": "2026-11-04T16:25:00Z",
+     "text": "Sent Kevin the first digest: 17 jobs scoring 75+"
+    },
+    {
+     "at": "2026-11-04T16:48:00Z",
+     "text": "Shared 19 tailored resumes for review"
+    },
+    {
+     "at": "2026-11-04T17:10:00Z",
+     "text": "Scheduled the weekday morning run (7:23 AM ET)"
+    },
+    {
+     "at": "2026-11-04T17:26:00Z",
+     "text": "Handed Kevin 7 items only he can do (codes, accounts, decisions)"
+    }
+   ]
+  },
+  "scout": {
+   "status": "done",
+   "queue": [
+    "Next search: Thu 7:23 AM ET (Indeed + Dice, last 24h)"
+   ],
+   "history": [
+    {
+     "at": "2026-11-04T16:05:00Z",
+     "text": "Searched Indeed: 51 jobs scored"
+    },
+    {
+     "at": "2026-11-04T16:21:00Z",
+     "text": "Searched Dice with a narrow filter: 13 jobs"
+    },
+    {
+     "at": "2026-11-04T16:25:00Z",
+     "text": "Re-ran Dice without the filter: 47 more, 111 total"
+    },
+    {
+     "at": "2026-11-04T16:25:00Z",
+     "text": "Read 8 full postings; skipped 10 for deal-breakers"
+    }
+   ]
+  },
+  "tailor": {
+   "status": "done",
+   "queue": [],
+   "history": [
+    {
+     "at": "2026-11-04T16:46:00Z",
+     "text": "Tailored 19 resumes (DOCX + PDF + change log) for jobs scoring 70+"
+    },
+    {
+     "at": "2026-11-04T17:16:00Z",
+     "text": "Built the answer sheet and apply list"
+    }
+   ]
+  },
+  "turtle": {
+   "status": "active",
+   "queue": [
+    "Robert Half: step 3 of 6, waiting on Kevin's answer",
+    "Abbott: next up (may email a code)",
+    "Creative Information Technology (ADP): needs a fresh email code from Kevin",
+    "EyeSouth, Centene, Worldwide Clinical Trials, Cognizant, Ingersoll Rand: need an account Kevin creates",
+    "Harbor Freight: waiting on Kevin's OK to use the saved login",
+    "Quiktrak: needs Kevin's own written answer",
+    "iSpace, Sage IT, Computer Merchant: Dice Easy Apply, Kevin clicks these"
+   ],
+   "history": [
+    {
+     "at": "2026-11-04T17:19:00Z",
+     "text": "Started filling applications on Kevin's PC"
+    },
+    {
+     "at": "2026-11-04T17:16:00Z",
+     "text": "Skipped Capgemini (posting on hold), Sourcebooks, Municipal Accounts and eSystems after reading their apply pages"
+    },
+    {
+     "at": "2026-11-04T17:30:00Z",
+     "text": "Filled NBCUniversal and paused for Kevin's answers"
+    },
+    {
+     "at": "2026-11-04T17:39:00Z",
+     "text": "Submitted NBCUniversal: \"Application submitted!\""
+    },
+    {
+     "at": "2026-11-04T17:40:00Z",
+     "text": "Robert Half: passed steps 1 and 2"
+    }
+   ]
+  },
+  "scribe": {
+   "status": "idle",
+   "queue": [
+    "First inbox check: Thu 7:23 AM ET (watch for NBCUniversal's reply)"
+   ],
+   "history": [
+    {
+     "at": "2026-11-04T17:39:00Z",
+     "text": "Nothing to track until today: NBCUniversal is the first application sent"
+    }
+   ]
+  }
  },
+ "top": [
+  {
+   "score": 90,
+   "company": "Centene",
+   "title": "Senior Business Technical Analyst",
+   "location": "New York, NY · remote",
+   "salary": "$87,700 - $157,800/yr",
+   "source": "Indeed",
+   "route": "Company site",
+   "status": "waiting_kevin",
+   "url": "https://www.indeed.com/viewjob?jk=fd8bafe1bc37654d"
+  },
+  {
+   "score": 90,
+   "company": "iSpace, Inc",
+   "title": "Business Analyst III– Data Intelligence",
+   "location": "Remote",
+   "salary": "$55/hr",
+   "source": "Dice",
+   "route": "Dice Easy Apply",
+   "status": "kevin_to_apply",
+   "url": "https://www.dice.com/job-detail/508513c3-f710-4d03-b74f-5d1a222a12bc"
+  },
+  {
+   "score": 87,
+   "company": "Computer Merchant, Ltd., The",
+   "title": "Business Analyst-Healthcare",
+   "location": "Boston, Massachusetts",
+   "salary": "USD 60.00 - 62.00/hr",
+   "source": "Dice",
+   "route": "Company site",
+   "status": "kevin_to_apply",
+   "url": "https://www.dice.com/job-detail/533628ce-6a22-4492-8fd7-b8fcb11d2d88"
+  },
+  {
+   "score": 87,
+   "company": "EyeSouth Partners",
+   "title": "Sr. Business Analyst, Revenue Cycle",
+   "location": "Atlanta, GA",
+   "salary": "Not posted",
+   "source": "Indeed",
+   "route": "iCIMS",
+   "status": "waiting_kevin",
+   "url": "https://www.indeed.com/viewjob?jk=769ac1275c8af327"
+  },
+  {
+   "score": 87,
+   "company": "Robert Half",
+   "title": "Senior Business Analyst, Marketing",
+   "location": "San Ramon, CA · remote",
+   "salary": "$97,000 - $142,000/yr",
+   "source": "Indeed",
+   "route": "Company site",
+   "status": "in_progress",
+   "url": "https://www.indeed.com/viewjob?jk=6cf107c637a923c2"
+  },
+  {
+   "score": 86,
+   "company": "Capgemini",
+   "title": "Business Analyst",
+   "location": "Remote",
+   "salary": "$41.61 - $65.01/hr",
+   "source": "Indeed",
+   "route": "Company site",
+   "status": "skipped",
+   "url": "https://www.indeed.com/viewjob?jk=baf19ee9d8fe7f20"
+  },
+  {
+   "score": 86,
+   "company": "Cognizant",
+   "title": "Senior Business Analyst, Senior Consultant – Finance Platforms, Capital Markets",
+   "location": "Washington, DC",
+   "salary": "$90,000 - $116,000/yr",
+   "source": "Indeed",
+   "route": "Company site",
+   "status": "waiting_kevin",
+   "url": "https://www.indeed.com/viewjob?jk=a02967c146b5ae90"
+  },
+  {
+   "score": 85,
+   "company": "Sage IT Inc",
+   "title": "Senior Business Analyst - Healthcare - Remote",
+   "location": "US · remote",
+   "salary": "Not posted",
+   "source": "Dice",
+   "route": "Dice Easy Apply",
+   "status": "kevin_to_apply",
+   "url": "https://www.dice.com/job-detail/2287fa6d-3dc4-4e2f-b9ba-2431f9727370"
+  },
+  {
+   "score": 85,
+   "company": "Worldwide Clinical Trials",
+   "title": "Senior Business Analyst, AI Evaluation & Value Realization",
+   "location": "Research Triangle Park, NC · remote",
+   "salary": "$84,000 - $167,000/yr",
+   "source": "Indeed",
+   "route": "Workday",
+   "status": "waiting_kevin",
+   "url": "https://www.indeed.com/viewjob?jk=d415e4c00bbe98e7"
+  },
+  {
+   "score": 85,
+   "company": "eSystems, Inc.",
+   "title": "Business Analyst (MMIS experience required)",
+   "location": "Remote",
+   "salary": "Not posted",
+   "source": "Dice",
+   "route": "Dice Easy Apply",
+   "status": "skipped",
+   "url": "https://www.dice.com/job-detail/3e486327-bc76-4b88-88d5-cc6d98f0d053"
+  },
+  {
+   "score": 83,
+   "company": "NBCUniversal",
+   "title": "Senior Business Analyst, Sales Automation",
+   "location": "New York, NY",
+   "salary": "$95,000 - $115,000/yr",
+   "source": "Indeed",
+   "route": "Company site",
+   "status": "applied",
+   "url": "https://www.indeed.com/viewjob?jk=1eef21a5c7b19ed9"
+  },
+  {
+   "score": 82,
+   "company": "Kforce Technology Staffing",
+   "title": "Business Analyst",
+   "location": "Juno Beach, Florida",
+   "salary": "$48.00 - $52.25/hr",
+   "source": "Dice",
+   "route": "Company site",
+   "status": "waiting_kevin",
+   "url": "https://www.dice.com/job-detail/5fd2f9cd-086e-40d4-b17a-07d8d1661460"
+  },
+  {
+   "score": 80,
+   "company": "Ingersoll-Rand",
+   "title": "IT Business Analyst",
+   "location": "Davidson, NC · remote",
+   "salary": "$140,000 - $160,000/yr",
+   "source": "Indeed",
+   "route": "Company site",
+   "status": "waiting_kevin",
+   "url": "https://www.indeed.com/viewjob?jk=fbc61e0661e4a873"
+  },
+  {
+   "score": 78,
+   "company": "Abbott",
+   "title": "Sr Business Analyst",
+   "location": "Lake Forest, IL",
+   "salary": "$86,700 - $173,300/yr",
+   "source": "Indeed",
+   "route": "Company site",
+   "status": "queued",
+   "url": "https://www.indeed.com/viewjob?jk=c37485caddb7e7a7"
+  },
+  {
+   "score": 77,
+   "company": "Creative Information Technology India",
+   "title": "Digital Signage Business Analyst – Remote/Hybrid - St. Paul, MN",
+   "location": "Falls Church, VA · remote",
+   "salary": "Not posted",
+   "source": "Indeed",
+   "route": "Company site",
+   "status": "waiting_kevin",
+   "url": "https://www.indeed.com/viewjob?jk=2e7e986e3c427d7e"
+  },
+  {
+   "score": 77,
+   "company": "Sourcebooks, Inc.",
+   "title": "Business Analyst II",
+   "location": "Naperville, IL · remote",
+   "salary": "$105,000 - $125,000/yr",
+   "source": "Indeed",
+   "route": "Company site",
+   "status": "skipped",
+   "url": "https://www.indeed.com/viewjob?jk=195d201f23bdaae2"
+  },
+  {
+   "score": 75,
+   "company": "Quiktrak",
+   "title": "Business Analyst",
+   "location": "Remote",
+   "salary": "Not posted",
+   "source": "Indeed",
+   "route": "Company site",
+   "status": "waiting_kevin",
+   "url": "https://www.indeed.com/viewjob?jk=836a5bd936b46f8e"
+  },
+  {
+   "score": 70,
+   "company": "Harbor Freight Tools",
+   "title": "IT Business Analyst (Warranties & Claims) - Remote",
+   "location": "Calabasas, CA · remote",
+   "salary": "$78,100 - $117,100/yr",
+   "source": "Indeed",
+   "route": "Company site",
+   "status": "waiting_kevin",
+   "url": "https://www.indeed.com/viewjob?jk=03b3029de6ab82a6"
+  },
+  {
+   "score": 70,
+   "company": "Municipal Accounts & Consulting, L.P.",
+   "title": "Accounting Systems Business Analyst - Functional Lead - Contract",
+   "location": "Remote",
+   "salary": "$80/hr",
+   "source": "Indeed",
+   "route": "Company site",
+   "status": "skipped",
+   "url": "https://www.indeed.com/viewjob?jk=45e3123265426c3d"
+  }
+ ],
  "jobs": [
   {
    "company": "Centene",
    "title": "Senior Business Technical Analyst",
    "source": "Indeed",
    "score": 90,
-   "status": "scored",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "iSpace, Inc",
-   "title": "Business Analyst III\u2013 Data Intelligence",
+   "title": "Business Analyst III– Data Intelligence",
    "source": "Dice",
    "score": 90,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "Computer Merchant, Ltd., The",
    "title": "Business Analyst-Healthcare",
    "source": "Dice",
    "score": 87,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "EyeSouth Partners",
    "title": "Sr. Business Analyst, Revenue Cycle",
    "source": "Indeed",
    "score": 87,
-   "status": "scored",
-   "route": "iCIMS",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "Robert Half",
    "title": "Senior Business Analyst, Marketing",
    "source": "Indeed",
    "score": 87,
-   "status": "scored",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "Capgemini",
    "title": "Business Analyst",
    "source": "Indeed",
    "score": 86,
-   "status": "scored",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "Cognizant",
-   "title": "Senior Business Analyst, Senior Consultant \u2013 Finance Platforms, Capital Markets",
+   "title": "Senior Business Analyst, Senior Consultant – Finance Platforms, Capital Markets",
    "source": "Indeed",
    "score": 86,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "Sage IT Inc",
    "title": "Senior Business Analyst - Healthcare - Remote",
    "source": "Dice",
    "score": 85,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "Worldwide Clinical Trials",
    "title": "Senior Business Analyst, AI Evaluation & Value Realization",
    "source": "Indeed",
    "score": 85,
-   "status": "scored",
-   "route": "Workday",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "eSystems, Inc.",
    "title": "Business Analyst (MMIS experience required)",
    "source": "Dice",
    "score": 85,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "NBCUniversal",
    "title": "Senior Business Analyst, Sales Automation",
    "source": "Indeed",
    "score": 83,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "applied"
   },
   {
    "company": "Kforce Technology Staffing",
    "title": "Business Analyst",
    "source": "Dice",
    "score": 82,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "Ingersoll-Rand",
    "title": "IT Business Analyst",
    "source": "Indeed",
    "score": 80,
-   "status": "scored",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "Abbott",
    "title": "Sr Business Analyst",
    "source": "Indeed",
    "score": 78,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "Creative Information Technology India",
-   "title": "Digital Signage Business Analyst \u2013 Remote/Hybrid - St. Paul, MN",
+   "title": "Digital Signage Business Analyst – Remote/Hybrid - St. Paul, MN",
    "source": "Indeed",
    "score": 77,
-   "status": "scored",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "Sourcebooks, Inc.",
    "title": "Business Analyst II",
    "source": "Indeed",
    "score": 77,
-   "status": "scored",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "Quiktrak",
    "title": "Business Analyst",
    "source": "Indeed",
    "score": 75,
-   "status": "scored",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "Harbor Freight Tools",
    "title": "IT Business Analyst (Warranties & Claims) - Remote",
    "source": "Indeed",
    "score": 70,
-   "status": "scored",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "Municipal Accounts & Consulting, L.P.",
    "title": "Accounting Systems Business Analyst - Functional Lead - Contract",
    "source": "Indeed",
    "score": 70,
-   "status": "scored",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "tailored"
   },
   {
    "company": "Jean Martin, Inc",
-   "title": "Technical Business Systems Analyst \u2013 P&C Insurance",
+   "title": "Technical Business Systems Analyst – P&C Insurance",
    "source": "Dice",
    "score": 67,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Creative Information Technology India",
-   "title": "Business Analyst - HHS \u2013 Remote/Hybrid - McLean, VA.",
+   "title": "Business Analyst - HHS – Remote/Hybrid - McLean, VA.",
    "source": "Indeed",
    "score": 65,
-   "status": "scored",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "ClearpointCo",
    "title": "IT Senior Business Analyst",
    "source": "Indeed",
    "score": 64,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "JC CORPORATIONS",
    "title": "Business Analyst-KYC",
    "source": "Dice",
    "score": 64,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Oldcastle Infrastructure",
    "title": "Senior Business Analyst",
    "source": "Indeed",
    "score": 64,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Centillion Infotech",
    "title": "Salesforce Business Analyst",
    "source": "Dice",
    "score": 63,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "First Citizens Bank",
    "title": "Business Analyst II, Unclaimed Property & Escheatment (Remote AZ)",
    "source": "Indeed",
    "score": 63,
-   "status": "scored",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Kinetic Advantage",
    "title": "Senior Business Analyst",
    "source": "Indeed",
    "score": 63,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Apex Systems",
    "title": "Business Analyst - Polarion",
    "source": "Dice",
    "score": 62,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Arnex Solutions LLC",
    "title": "Business Analyst (Clinical Operations)",
    "source": "Dice",
    "score": 62,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Tek Inspirations LLC",
    "title": "Technical Business Analyst",
    "source": "Dice",
    "score": 62,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "loanDepot",
    "title": "Sr Business Systems Analyst",
    "source": "Indeed",
    "score": 62,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Arnex Solutions LLC",
    "title": "Veeva QMS Business Analyst",
    "source": "Dice",
    "score": 61,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Spotline",
    "title": "Business Analyst - Clinical Data & TFL Submission Package",
    "source": "Dice",
    "score": 61,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "State Street Corporation",
    "title": "Technical Business Analyst, Officer",
    "source": "Dice",
    "score": 61,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Apex Systems",
    "title": "Business Analyst",
    "source": "Dice",
    "score": 60,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Info Dinamica Inc",
    "title": "Business Analyst / Data Analyst  (Insurance Domain)",
    "source": "Dice",
    "score": 60,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Justrite",
    "title": "Senior Business Systems Analyst",
    "source": "Indeed",
    "score": 60,
-   "status": "scored",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "K. Hovnanian Companies",
    "title": "Sr. Principal Business Systems Analyst - Financial Planning & Accounting Applications",
    "source": "Indeed",
    "score": 60,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "K. Hovnanian Companies",
    "title": "Sr. Principal Business Systems Analyst - Homebuilder Ops",
    "source": "Indeed",
    "score": 60,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Perfict Global, Inc.",
    "title": "Salesforce Business Analyst",
    "source": "Dice",
    "score": 60,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Sony Interactive Entertainment",
    "title": "Senior Business Analyst, PlayStation Store",
    "source": "Indeed",
    "score": 60,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "University of North Carolina at Greensboro",
-   "title": "\u200bSoftware Asset Management Business Analyst",
+   "title": "​Software Asset Management Business Analyst",
    "source": "Indeed",
    "score": 60,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Advent Global Solutions, Inc.",
    "title": "W2 CTH - Business Analyst - Power BI, Databricks",
    "source": "Dice",
    "score": 59,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Innosoul inc",
    "title": "Business Analyst",
    "source": "Dice",
    "score": 59,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "J-RAM IT Consulting Inc.",
-   "title": "Senior Business Analyst \u2013 Data, GenAI & Agentic AI",
+   "title": "Senior Business Analyst – Data, GenAI & Agentic AI",
    "source": "Dice",
    "score": 59,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "MAS TEK IT LLC",
    "title": "Business Analyst - W2 (Data, GenAI & Agentic AI)",
    "source": "Dice",
    "score": 59,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Thermo Fisher Scientific",
    "title": "Business Process Analyst",
    "source": "Indeed",
    "score": 59,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Amzur Technologies, Inc.",
    "title": "Sr Business Analyst",
    "source": "Dice",
    "score": 58,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Arnex Solutions LLC",
    "title": "SR Business Analyst Multi-Omics Data Modalities",
    "source": "Dice",
    "score": 58,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Arnex Solutions LLC",
    "title": "Business Analyst - CMC Regulatory Authoring",
    "source": "Dice",
    "score": 58,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "CCS Global Tech",
    "title": "Business Analyst - Mid Level",
    "source": "Dice",
    "score": 58,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Elegant Enterprise Wide Solutions",
    "title": "IT Business Analyst in Washington, DC",
    "source": "Dice",
    "score": 58,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Peterson Technology Partners",
-   "title": "Senior Business Analyst \u2013 P&C Insurance",
+   "title": "Senior Business Analyst – P&C Insurance",
    "source": "Dice",
    "score": 58,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Southwestern Health Resources",
    "title": "Senior Clinical Informatics Business Analyst - Southwestern Health Resources",
    "source": "Indeed",
    "score": 58,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "StackNexus Inc.",
    "title": "Sr. Business Analyst - SLG",
    "source": "Dice",
    "score": 58,
-   "status": "scored",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Teknohire, Inc.",
    "title": "GIS Business Analyst",
    "source": "Dice",
    "score": 58,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Creative IT Inc",
    "title": "Business Analyst - Digital Signage",
    "source": "Dice",
    "score": 57,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "HCA Healthcare",
    "title": "Business Analyst",
    "source": "Indeed",
    "score": 57,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Newt Global",
    "title": "Business Analyst (Wholesale lending)",
    "source": "Dice",
    "score": 57,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Pacific Gas and Electric",
    "title": "Supervisor, Business Analyst",
    "source": "Indeed",
    "score": 57,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Transcend IT Solutions",
    "title": "Salesforce Developer/Salesforce Business Analyst",
    "source": "Dice",
    "score": 57,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Kalles Group",
    "title": "Business Systems Analyst Consultant - Cybersecurity Controls",
    "source": "Indeed",
    "score": 56,
-   "status": "scored",
-   "route": "Greenhouse",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "SUNRAY INFORMATICS",
    "title": "Business Analyst with ServiceNow",
    "source": "Dice",
    "score": 56,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Apex Systems",
    "title": "Business Analyst/Tech Writer",
    "source": "Dice",
    "score": 55,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Apple",
    "title": "Business Process Analyst, WW Sales Business Transformation",
    "source": "Indeed",
    "score": 55,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Apple",
    "title": "Americas Logistics-Business Analyst",
    "source": "Indeed",
    "score": 55,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Connect Tech+Talent",
    "title": "Business Analyst, Level 3 _ 455-27-30157",
    "source": "Dice",
    "score": 55,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Arnex Solutions LLC",
    "title": "Business Analyst_ELN Configuration",
    "source": "Dice",
    "score": 54,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Next Gen IT Inc",
    "title": "GIS Business Analyst",
    "source": "Dice",
    "score": 54,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Raas Infotek LLC",
    "title": "Business Analyst",
    "source": "Dice",
    "score": 54,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Robert Half",
    "title": "Business Analyst",
    "source": "Dice",
    "score": 54,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "WaterStreet Company",
    "title": "Business Analyst",
    "source": "Indeed",
    "score": 54,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Petoskey Plastics",
    "title": "Senior Epicor ERP Business Analyst / ERP Functional Lead",
    "source": "Indeed",
    "score": 53,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Santiam Hospital & Clinics",
    "title": "Business Application Analyst",
    "source": "Indeed",
    "score": 53,
-   "status": "scored",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "MAK Technologies, LLC",
    "title": "ERP Business Analyst (Finance)",
    "source": "Dice",
    "score": 52,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Michael Page",
    "title": "Technical Business Analyst",
    "source": "Dice",
    "score": 52,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "TechniPros, LLC",
    "title": "Business Analyst (Commercial Real Estate)",
    "source": "Dice",
    "score": 52,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "eSolutionsFirst, LLC",
    "title": "Senior Risk Business Analyst with OneTrust",
    "source": "Dice",
    "score": 52,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Align Technology",
    "title": "Sr. Business Systems Analyst- Contractor",
    "source": "Indeed",
    "score": 51,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Cambrex",
    "title": "LIMS Business Analyst",
    "source": "Indeed",
    "score": 51,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "SES",
    "title": "Retirement Service Subject Matter Expert (SME) - Business Analyst Experience",
    "source": "Dice",
    "score": 51,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "InfiCare",
    "title": "SFDC Business Analyst",
    "source": "Dice",
    "score": 50,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Xoriant Corporation",
    "title": "Business Analyst",
    "source": "Dice",
    "score": 50,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Sacrum Technologies LLC",
    "title": "IT System Business Analyst",
    "source": "Dice",
    "score": 49,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "ASCII Group LLC",
    "title": "Salesforce Business Analyst",
    "source": "Dice",
    "score": 48,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Alliance IT",
-   "title": "Business Analyst \u2013 P&C Insurance  with JIRA // New Jersey (Onsite)",
+   "title": "Business Analyst – P&C Insurance  with JIRA // New Jersey (Onsite)",
    "source": "Dice",
    "score": 48,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "CCS Global Tech",
    "title": "Business Analyst",
    "source": "Dice",
    "score": 48,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Pantherx Specialty Llc",
    "title": "Senior Business Systems Analyst- 3PL",
    "source": "Indeed",
    "score": 48,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Tror",
    "title": "Salesforce Business Systems Analyst, Pleasanton, CA Only (Remote)",
    "source": "Dice",
    "score": 48,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Fifth Third Bank",
    "title": "Lead Business Analyst, Customer Personalization",
    "source": "Indeed",
    "score": 47,
-   "status": "scored",
-   "route": "Workday",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Infoorigin Inc",
    "title": "Business Systems Analyst (IT Infrastructure)",
    "source": "Indeed",
    "score": 47,
-   "status": "scored",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Seattle Children's",
    "title": "Supply Chain ERP Business Systems Analyst SR",
    "source": "Indeed",
    "score": 47,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "TexcelVision Inc.",
    "title": "Business Analyst 3 (Required candidates with Oil& gas industry exp)",
    "source": "Dice",
    "score": 47,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Wissen Infotech",
-   "title": "Senior Business Analyst \u2013 Data Security & Access Governance",
+   "title": "Senior Business Analyst – Data Security & Access Governance",
    "source": "Dice",
    "score": 47,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Arnex Solutions LLC",
    "title": "Sr. IT Business Analyst  (IT/Ops)",
    "source": "Dice",
    "score": 44,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Gunderson Inc",
    "title": "Executive Business Analyst",
    "source": "Dice",
    "score": 44,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "DGN Technologies",
    "title": "Business Systems Analyst 2",
    "source": "Dice",
    "score": 42,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "DGN Technologies",
    "title": "Business Systems Analyst 3",
    "source": "Dice",
    "score": 42,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Zolon Tech Solutions Inc",
    "title": "Business Data Analyst",
    "source": "Dice",
    "score": 42,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "McShane Construction Company",
    "title": "Business Application Analyst",
    "source": "Indeed",
    "score": 40,
-   "status": "scored",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "The Dignify Solutions, LLC",
-   "title": "Senior Business Analyst \u2013 RBDMS / Mainframe Transformation",
+   "title": "Senior Business Analyst – RBDMS / Mainframe Transformation",
    "source": "Dice",
    "score": 40,
-   "status": "scored",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "scored"
   },
   {
    "company": "Brown University",
    "title": "Athletics Business Analyst",
    "source": "Indeed",
    "score": 0,
-   "status": "skipped",
-   "route": "Workday",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "skipped"
   },
   {
    "company": "CACI International",
    "title": "Acquisition SME/ Business Systems Analyst",
    "source": "Indeed",
    "score": 0,
-   "status": "skipped",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "skipped"
   },
   {
    "company": "Confianza Technologies LLC",
    "title": "Senior Business Analyst",
    "source": "Dice",
    "score": 0,
-   "status": "skipped",
-   "route": "Dice Easy Apply",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "skipped"
   },
   {
    "company": "General Dynamics Information Technology",
    "title": "Sr. Business Analyst",
    "source": "Indeed",
    "score": 0,
-   "status": "skipped",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "skipped"
   },
   {
    "company": "Global Alliant Inc",
    "title": "Salesforce Business Analyst - W2",
    "source": "Indeed",
    "score": 0,
-   "status": "skipped",
-   "route": "Company site",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "skipped"
   },
   {
    "company": "LMI",
    "title": "Business / Data Analyst Level III",
    "source": "Indeed",
    "score": 0,
-   "status": "skipped",
-   "route": "iCIMS",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "skipped"
   },
   {
    "company": "Quantum Sky",
    "title": "Senior Business Analyst",
    "source": "Indeed",
    "score": 0,
-   "status": "skipped",
-   "route": "iCIMS",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "skipped"
   },
   {
    "company": "SAIC",
    "title": "Business Process Analyst",
    "source": "Indeed",
    "score": 0,
-   "status": "skipped",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "skipped"
   },
   {
    "company": "SIGMATECH",
    "title": "Senior Enterprise Business Analyst",
    "source": "Indeed",
    "score": 0,
-   "status": "skipped",
-   "route": "Company site",
-   "remote": false,
-   "found": "2026-11-04"
+   "status": "skipped"
   },
   {
    "company": "Steampunk",
    "title": "Senior Business Analyst",
    "source": "Indeed",
    "score": 0,
-   "status": "skipped",
-   "route": "iCIMS",
-   "remote": true,
-   "found": "2026-11-04"
+   "status": "skipped"
   }
  ]
 }
