@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T18:05:00Z",
+ "updated": "2026-11-04T18:23:00Z",
  "next_run": "2026-11-05T12:23:00Z",
  "run_date": "2026-11-04",
  "counts": {
@@ -84,14 +84,13 @@
    ]
   },
   "turtle": {
-   "status": "active",
+   "status": "waiting",
    "queue": [
-    "Abbott: next up (may email a code)",
-    "Creative Information Technology (ADP): needs a fresh email code from Kevin",
-    "EyeSouth, Centene, Worldwide Clinical Trials, Cognizant, Ingersoll Rand: need an account Kevin creates",
-    "Harbor Freight: next up (Kevin OK'd the saved login)",
-    "Quiktrak: needs Kevin's own written answer",
-    "iSpace, Sage IT, Computer Merchant: Dice Easy Apply, Kevin clicks these"
+    "Computer Merchant: waiting for Kevin to pass the site's human check",
+    "Harbor Freight: waiting for Kevin to sign in or create an account",
+    "Cognizant, Centene, Worldwide Clinical Trials, Ingersoll Rand, EyeSouth: waiting for Kevin to create accounts",
+    "ADP and Abbott: waiting for Kevin to enter the email code",
+    "Quiktrak: waiting for Kevin's decision"
    ],
    "history": [
     {
