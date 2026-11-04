@@ -422,7 +422,7 @@ const REPO='https://github.com/kevinandrin7-start/Kevin-Job-Gang';
 function replyURL(agent,item,reply){
   const short=(item||'').split(':')[0].slice(0,60);
   const title=`[${agent}] ${reply==='Reply'?'Reply':reply}${short?': '+short:''}`;
-  const body=`Agent: ${agent}\nItem: ${item||'(general message)'}\nReply: ${reply==='Reply'?'':reply}\n\n<!-- Write any extra note above. This repo is public: never put codes, passwords or personal details here. -->`;
+  const body=`Agent: ${agent}\nItem: ${short||'(general message)'}\nReply: ${reply==='Reply'?'':reply}\n\n<!-- Write any extra note above. This repo is public: never put codes, passwords or personal details here. -->`;
   return `${REPO}/issues/new?labels=agent-reply&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
 }
 document.getElementById('msgcrew').onclick=()=>window.open(replyURL('Captain','', 'Reply'),'_blank','noopener');
