@@ -1,22 +1,21 @@
 {
- "updated": "2026-11-04T17:42:00Z",
+ "updated": "2026-11-04T17:46:00Z",
  "next_run": "2026-11-05T12:23:00Z",
  "run_date": "2026-11-04",
  "counts": {
   "found": 111,
-  "skipped": 10,
-  "ready": 17,
-  "scored70": 19,
+  "skipped": 14,
+  "ready": 14,
+  "scored70": 15,
   "tailored": 19,
-  "applied": 1,
-  "in_progress": 1,
+  "applied": 2,
+  "in_progress": 0,
   "waiting_kevin": 12
  },
  "agents": {
   "captain": {
    "status": "waiting",
    "queue": [
-    "Robert Half: one screening question for Kevin (step 3 of 6)",
     "Decide on Kforce (on-site contract, marketing opt-in)",
     "Decide whether Turtle may use the saved Harbor Freight login",
     "Next weekday run: Thu 7:23 AM ET"
@@ -85,7 +84,6 @@
   "turtle": {
    "status": "active",
    "queue": [
-    "Robert Half: step 3 of 6, waiting on Kevin's answer",
     "Abbott: next up (may email a code)",
     "Creative Information Technology (ADP): needs a fresh email code from Kevin",
     "EyeSouth, Centene, Worldwide Clinical Trials, Cognizant, Ingersoll Rand: need an account Kevin creates",
@@ -113,18 +111,22 @@
     {
      "at": "2026-11-04T17:40:00Z",
      "text": "Robert Half: passed steps 1 and 2"
+    },
+    {
+     "at": "2026-11-04T17:46:00Z",
+     "text": "Submitted Robert Half"
     }
    ]
   },
   "scribe": {
    "status": "idle",
    "queue": [
-    "First inbox check: Thu 7:23 AM ET (watch for NBCUniversal's reply)"
+    "First inbox check: Thu 7:23 AM ET (watch for NBCUniversal and Robert Half replies)"
    ],
    "history": [
     {
      "at": "2026-11-04T17:39:00Z",
-     "text": "Nothing to track until today: NBCUniversal is the first application sent"
+     "text": "Nothing to track until today: NBCUniversal and Robert Half are the first applications sent"
     }
    ]
   }
@@ -182,19 +184,8 @@
    "salary": "$97,000 - $142,000/yr",
    "source": "Indeed",
    "route": "Company site",
-   "status": "in_progress",
+   "status": "applied",
    "url": "https://www.indeed.com/viewjob?jk=6cf107c637a923c2"
-  },
-  {
-   "score": 86,
-   "company": "Capgemini",
-   "title": "Business Analyst",
-   "location": "Remote",
-   "salary": "$41.61 - $65.01/hr",
-   "source": "Indeed",
-   "route": "Company site",
-   "status": "skipped",
-   "url": "https://www.indeed.com/viewjob?jk=baf19ee9d8fe7f20"
   },
   {
    "score": 86,
@@ -228,17 +219,6 @@
    "route": "Workday",
    "status": "waiting_kevin",
    "url": "https://www.indeed.com/viewjob?jk=d415e4c00bbe98e7"
-  },
-  {
-   "score": 85,
-   "company": "eSystems, Inc.",
-   "title": "Business Analyst (MMIS experience required)",
-   "location": "Remote",
-   "salary": "Not posted",
-   "source": "Dice",
-   "route": "Dice Easy Apply",
-   "status": "skipped",
-   "url": "https://www.dice.com/job-detail/3e486327-bc76-4b88-88d5-cc6d98f0d053"
   },
   {
    "score": 83,
@@ -296,17 +276,6 @@
    "url": "https://www.indeed.com/viewjob?jk=2e7e986e3c427d7e"
   },
   {
-   "score": 77,
-   "company": "Sourcebooks, Inc.",
-   "title": "Business Analyst II",
-   "location": "Naperville, IL · remote",
-   "salary": "$105,000 - $125,000/yr",
-   "source": "Indeed",
-   "route": "Company site",
-   "status": "skipped",
-   "url": "https://www.indeed.com/viewjob?jk=195d201f23bdaae2"
-  },
-  {
    "score": 75,
    "company": "Quiktrak",
    "title": "Business Analyst",
@@ -327,17 +296,6 @@
    "route": "Company site",
    "status": "waiting_kevin",
    "url": "https://www.indeed.com/viewjob?jk=03b3029de6ab82a6"
-  },
-  {
-   "score": 70,
-   "company": "Municipal Accounts & Consulting, L.P.",
-   "title": "Accounting Systems Business Analyst - Functional Lead - Contract",
-   "location": "Remote",
-   "salary": "$80/hr",
-   "source": "Indeed",
-   "route": "Company site",
-   "status": "skipped",
-   "url": "https://www.indeed.com/viewjob?jk=45e3123265426c3d"
   }
  ],
  "jobs": [
@@ -374,14 +332,14 @@
    "title": "Senior Business Analyst, Marketing",
    "source": "Indeed",
    "score": 87,
-   "status": "tailored"
+   "status": "applied"
   },
   {
    "company": "Capgemini",
    "title": "Business Analyst",
    "source": "Indeed",
    "score": 86,
-   "status": "tailored"
+   "status": "skipped"
   },
   {
    "company": "Cognizant",
@@ -409,7 +367,7 @@
    "title": "Business Analyst (MMIS experience required)",
    "source": "Dice",
    "score": 85,
-   "status": "tailored"
+   "status": "skipped"
   },
   {
    "company": "NBCUniversal",
@@ -451,7 +409,7 @@
    "title": "Business Analyst II",
    "source": "Indeed",
    "score": 77,
-   "status": "tailored"
+   "status": "skipped"
   },
   {
    "company": "Quiktrak",
@@ -472,7 +430,7 @@
    "title": "Accounting Systems Business Analyst - Functional Lead - Contract",
    "source": "Indeed",
    "score": 70,
-   "status": "tailored"
+   "status": "skipped"
   },
   {
    "company": "Jean Martin, Inc",
