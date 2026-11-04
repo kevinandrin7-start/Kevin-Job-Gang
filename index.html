@@ -111,7 +111,7 @@ footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
 </head>
 <body>
 <header>
-  <h1>Kevin's Job Gang<small id="sub">Five agents, one Ledger. Replaying the latest run.</small></h1>
+  <h1>Kevin's Job Gang<small id="sub">Four agents, one Ledger. Replaying the latest run.</small></h1>
   <div class="controls">
     <span class="live" id="clock"></span>
     <div class="seg"><button id="m-live" class="on"><span class="dot"></span>Live</button><button id="m-replay">Replay</button></div>
@@ -161,19 +161,18 @@ const AG = {
   scout:{label:'Scout', sub:'job-matcher', role:'Searches Indeed and Dice, dedupes against the Ledger and scores every job 0 to 100.'},
   tailor:{label:'Tailor', sub:'resume-tailor', role:'Writes a truthful, ATS-friendly resume for each top job, using only real experience.'},
   turtle:{label:'Turtle', sub:'form-filler', role:'Fills applications at a human pace and stops to ask Kevin when a form needs him.'},
-  scribe:{label:'Scribe', sub:'status-tracker', role:'Reads recruiter emails, labels them and keeps statuses in the Ledger honest.'},
 };
 const NODES = {
   indeed:{label:'Indeed', kind:'src', c:'source'}, dice:{label:'Dice', kind:'src', c:'source'}, gmail:{label:'Gmail', kind:'src', c:'source'},
   scout:{label:'Scout', kind:'agent', c:'scout'}, captain:{label:'Captain', kind:'agent', c:'captain'},
   ledger:{label:'Ledger', kind:'store', c:'ledger'}, tailor:{label:'Tailor', kind:'agent', c:'tailor'},
-  kevin:{label:'Kevin', kind:'human', c:'kevin'}, turtle:{label:'Turtle', kind:'agent', c:'turtle'}, scribe:{label:'Scribe', kind:'agent', c:'scribe'},
+  kevin:{label:'Kevin', kind:'human', c:'kevin'}, turtle:{label:'Turtle', kind:'agent', c:'turtle'},
 };
-const WIDE = {indeed:[.07,.2],dice:[.07,.5],gmail:[.07,.82],scout:[.27,.4],captain:[.5,.22],ledger:[.5,.66],tailor:[.72,.12],kevin:[.72,.5],turtle:[.93,.3],scribe:[.9,.8]};
-const TALL = {indeed:[.18,.07],dice:[.5,.07],gmail:[.84,.07],scout:[.32,.25],captain:[.22,.47],ledger:[.7,.45],tailor:[.18,.68],kevin:[.55,.68],turtle:[.3,.92],scribe:[.78,.9]};
+const WIDE = {indeed:[.07,.2],dice:[.07,.5],gmail:[.07,.82],scout:[.27,.4],captain:[.5,.22],ledger:[.5,.66],tailor:[.72,.14],kevin:[.72,.58],turtle:[.92,.38]};
+const TALL = {indeed:[.18,.07],dice:[.5,.07],gmail:[.84,.07],scout:[.32,.25],captain:[.22,.47],ledger:[.7,.45],tailor:[.18,.68],kevin:[.68,.68],turtle:[.45,.92]};
 const EDGES = [['indeed','scout'],['dice','scout'],['gmail','scout'],['captain','scout'],['scout','captain'],['scout','ledger'],
   ['ledger','captain'],['captain','tailor'],['tailor','ledger'],['captain','kevin'],['kevin','captain'],['captain','turtle'],
-  ['turtle','ledger'],['turtle','kevin'],['kevin','turtle'],['gmail','scribe'],['scribe','ledger'],['scribe','captain']];
+  ['turtle','ledger'],['turtle','kevin'],['kevin','turtle']];
 const E = {}; EDGES.forEach(([a,b],i)=>{ E[a+'>'+b]={a,b,heat:0,bend:(i%2?1:-1)*.12}; });
 [['scout','captain'],['kevin','captain'],['turtle','kevin']].forEach(([a,b])=>{ E[a+'>'+b].bend=.2; E[b+'>'+a].bend=.2; });
 
@@ -280,7 +279,6 @@ function buildReplay(){
     const a=DATA.top.filter(j=>j.status==='applied').map(j=>j.company).join(', ');
     say('turtle','ledger',`Submitted: ${a||'none yet'}. ${C.in_progress} in progress.`); });
   t+=1500;
-  at(t,()=>{ send('gmail','scribe',{label:'inbox',size:3}); say('scribe','gmail','First inbox check is on the next morning run.'); });
   t+=4000;
   at(t,()=>setMode('live'));
 }
@@ -292,7 +290,6 @@ function liveEdgesFor(k,item){
   if(k==='turtle') return /kevin|account|code|clicks|answer|login/.test(s) ? ['turtle','kevin'] : ['captain','turtle'];
   if(k==='captain') return /kevin|decide|question/.test(s) ? ['captain','kevin'] : ['captain','scout'];
   if(k==='scout') return ['captain','scout'];
-  if(k==='scribe') return ['gmail','scribe'];
   return ['captain',k];
 }
 let liveTick=0;
@@ -326,7 +323,7 @@ document.getElementById('m-live').onclick=()=>setMode('live');
 document.getElementById('m-replay').onclick=()=>setMode('replay');
 
 /* ---------- agents panel ---------- */
-const STATUS_TXT = {active:'working',done:'done for today',waiting:'waiting on Kevin',idle:'idle'};
+const STATUS_TXT = {active:'working',working:'working',done:'done for today',waiting:'waiting on Kevin',idle:'idle'};
 const agentsEl=document.getElementById('agents'), detail=document.getElementById('detail');
 let selected='turtle';
 function renderAgents(){
@@ -334,7 +331,7 @@ function renderAgents(){
   Object.entries(AG).forEach(([k,a])=>{
     const st=DATA.agents[k]||{}, n=(st.queue||[]).length;
     const d=document.createElement('div'); d.className='agent'+(k===selected?' sel':''); d.style.setProperty('--c',css(NODES[k].c));
-    d.innerHTML=`<img class="av" src="${AVATAR_URL[k]}" alt=""><div><b>${a.label}</b><span>${STATUS_TXT[st.status]||''}${n?` · ${n} pending`:''}</span></div>`;
+    d.innerHTML=`<img class="av" src="${AVATAR_URL[k]}" alt=""><div><b>${a.label}</b><span>${STATUS_TXT[st.status]||st.status||''}${n?` · ${n} pending`:''}</span></div>`;
     d.onclick=()=>select(k); agentsEl.append(d);
   });
   const k=selected, st=DATA.agents[k]||{}, c=css(NODES[k].c);
@@ -369,7 +366,7 @@ function renderJobs(){
 }
 
 function renderAll(){
-  document.getElementById('sub').textContent = `Five agents, one Ledger. Last update ${fmtT(DATA.updated)}${DATA.next_run?` · next run ${fmtT(DATA.next_run)}`:''}.`;
+  document.getElementById('sub').textContent = `Four agents, one Ledger. Last update ${fmtT(DATA.updated)}${DATA.next_run?` · next run ${fmtT(DATA.next_run)}`:''}.`;
   renderAgents(); renderJobs(); if(mode==='live') buildLive();
 }
 
@@ -406,7 +403,7 @@ function drawNodes(now){
     ctx.font='600 12px Inter, sans-serif'; ctx.textAlign='center'; ctx.fillStyle='#e6ebf5';
     ctx.fillText(n.label,n.x,n.y+r+18);
     if(AG[k]){ const q=(DATA.agents[k]?.queue||[]).length; ctx.font='400 10px "JetBrains Mono", monospace'; ctx.fillStyle=hex2rgba(col,.85);
-      ctx.fillText((STATUS_TXT[st]||'')+(q?` · ${q}`:''),n.x,n.y+r+31); }
+      ctx.fillText((STATUS_TXT[st]||st||'')+(q?` · ${q}`:''),n.x,n.y+r+31); }
     n.act*=.94;
   }
 }
