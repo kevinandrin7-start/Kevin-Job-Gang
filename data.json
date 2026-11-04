@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T19:40:00Z",
+ "updated": "2026-11-04T19:41:00Z",
  "next_run": "2026-11-05T12:23:00Z",
  "run_date": "2026-11-04",
  "counts": {
@@ -10,7 +10,7 @@
   "tailored": 19,
   "applied": 5,
   "in_progress": 0,
-  "waiting_kevin": 7
+  "waiting_kevin": 6
  },
  "agents": {
   "captain": {
@@ -42,6 +42,10 @@
     {
      "at": "2026-11-04T17:56:00Z",
      "text": "Kevin: skip Florida jobs from now on; OK to reuse saved answers and the Harbor Freight login"
+    },
+    {
+     "at": "2026-11-04T19:40:00Z",
+     "text": "Kevin: four companies added to the never-apply list"
     }
    ]
   },
@@ -88,7 +92,7 @@
    "queue": [
     "Computer Merchant: waiting for Kevin to pass the site's human check",
     "Harbor Freight: waiting for Kevin to sign in or create an account",
-    "Cognizant, Worldwide Clinical Trials, Ingersoll Rand, EyeSouth: waiting for Kevin to create accounts",
+    "Worldwide Clinical Trials, Ingersoll Rand, EyeSouth: waiting for Kevin to create accounts",
     "ADP and Abbott: waiting for Kevin to enter the email code",
     "Quiktrak: waiting for Kevin's decision"
    ],
@@ -225,7 +229,7 @@
    "salary": "$90,000 - $116,000/yr",
    "source": "Indeed",
    "route": "Company site",
-   "status": "waiting_kevin",
+   "status": "skipped",
    "url": "https://www.indeed.com/viewjob?jk=a02967c146b5ae90",
    "apply_url": "https://careers.cognizant.com/global-en/jobs/00071085331/senior-business-analyst-senior-consultant-finance-platforms-capital-markets/"
   },
