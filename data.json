@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T17:46:00Z",
+ "updated": "2026-11-04T17:58:00Z",
  "next_run": "2026-11-05T12:23:00Z",
  "run_date": "2026-11-04",
  "counts": {
@@ -10,14 +10,12 @@
   "tailored": 19,
   "applied": 2,
   "in_progress": 0,
-  "waiting_kevin": 12
+  "waiting_kevin": 10
  },
  "agents": {
   "captain": {
    "status": "waiting",
    "queue": [
-    "Decide on Kforce (on-site contract, marketing opt-in)",
-    "Decide whether Turtle may use the saved Harbor Freight login",
     "Next weekday run: Thu 7:23 AM ET"
    ],
    "history": [
@@ -40,6 +38,10 @@
     {
      "at": "2026-11-04T17:26:00Z",
      "text": "Handed Kevin 7 items only he can do (codes, accounts, decisions)"
+    },
+    {
+     "at": "2026-11-04T17:56:00Z",
+     "text": "Kevin: skip Florida jobs from now on; OK to reuse saved answers and the Harbor Freight login"
     }
    ]
   },
@@ -87,7 +89,7 @@
     "Abbott: next up (may email a code)",
     "Creative Information Technology (ADP): needs a fresh email code from Kevin",
     "EyeSouth, Centene, Worldwide Clinical Trials, Cognizant, Ingersoll Rand: need an account Kevin creates",
-    "Harbor Freight: waiting on Kevin's OK to use the saved login",
+    "Harbor Freight: next up (Kevin OK'd the saved login)",
     "Quiktrak: needs Kevin's own written answer",
     "iSpace, Sage IT, Computer Merchant: Dice Easy Apply, Kevin clicks these"
    ],
@@ -115,6 +117,10 @@
     {
      "at": "2026-11-04T17:46:00Z",
      "text": "Submitted Robert Half"
+    },
+    {
+     "at": "2026-11-04T17:56:00Z",
+     "text": "Skipped Kforce (Florida, on Kevin's request)"
     }
    ]
   },
@@ -141,7 +147,8 @@
    "source": "Indeed",
    "route": "Company site",
    "status": "waiting_kevin",
-   "url": "https://www.indeed.com/viewjob?jk=fd8bafe1bc37654d"
+   "url": "https://www.indeed.com/viewjob?jk=fd8bafe1bc37654d",
+   "apply_url": "https://jobs.centene.com/us/en/jobs/1672956/senior-business-technical-analyst/"
   },
   {
    "score": 90,
@@ -152,7 +159,8 @@
    "source": "Dice",
    "route": "Dice Easy Apply",
    "status": "kevin_to_apply",
-   "url": "https://www.dice.com/job-detail/508513c3-f710-4d03-b74f-5d1a222a12bc"
+   "url": "https://www.dice.com/job-detail/508513c3-f710-4d03-b74f-5d1a222a12bc",
+   "apply_url": "https://www.dice.com/job-detail/508513c3-f710-4d03-b74f-5d1a222a12bc"
   },
   {
    "score": 87,
@@ -163,7 +171,8 @@
    "source": "Dice",
    "route": "Company site",
    "status": "kevin_to_apply",
-   "url": "https://www.dice.com/job-detail/533628ce-6a22-4492-8fd7-b8fcb11d2d88"
+   "url": "https://www.dice.com/job-detail/533628ce-6a22-4492-8fd7-b8fcb11d2d88",
+   "apply_url": "https://www.dice.com/job-detail/533628ce-6a22-4492-8fd7-b8fcb11d2d88"
   },
   {
    "score": 87,
@@ -174,7 +183,8 @@
    "source": "Indeed",
    "route": "iCIMS",
    "status": "waiting_kevin",
-   "url": "https://www.indeed.com/viewjob?jk=769ac1275c8af327"
+   "url": "https://www.indeed.com/viewjob?jk=769ac1275c8af327",
+   "apply_url": "https://careers-eyesouthpartners.icims.com/jobs/10380/job"
   },
   {
    "score": 87,
@@ -185,7 +195,8 @@
    "source": "Indeed",
    "route": "Company site",
    "status": "applied",
-   "url": "https://www.indeed.com/viewjob?jk=6cf107c637a923c2"
+   "url": "https://www.indeed.com/viewjob?jk=6cf107c637a923c2",
+   "apply_url": "https://careers.roberthalf.com/global/en/job/ROHAGLOBALJR262051EXTERNALENGLOBAL/Senior-Business-Analyst-Marketing"
   },
   {
    "score": 86,
@@ -196,7 +207,8 @@
    "source": "Indeed",
    "route": "Company site",
    "status": "skipped",
-   "url": "https://www.indeed.com/viewjob?jk=baf19ee9d8fe7f20"
+   "url": "https://www.indeed.com/viewjob?jk=baf19ee9d8fe7f20",
+   "apply_url": "https://capgemini.talentnet.community/jobs/cc812925-0209-4b0c-8964-43a1ab358feb"
   },
   {
    "score": 86,
@@ -207,7 +219,8 @@
    "source": "Indeed",
    "route": "Company site",
    "status": "waiting_kevin",
-   "url": "https://www.indeed.com/viewjob?jk=a02967c146b5ae90"
+   "url": "https://www.indeed.com/viewjob?jk=a02967c146b5ae90",
+   "apply_url": "https://careers.cognizant.com/global-en/jobs/00071085331/senior-business-analyst-senior-consultant-finance-platforms-capital-markets/"
   },
   {
    "score": 85,
@@ -218,7 +231,8 @@
    "source": "Dice",
    "route": "Dice Easy Apply",
    "status": "kevin_to_apply",
-   "url": "https://www.dice.com/job-detail/2287fa6d-3dc4-4e2f-b9ba-2431f9727370"
+   "url": "https://www.dice.com/job-detail/2287fa6d-3dc4-4e2f-b9ba-2431f9727370",
+   "apply_url": "https://www.dice.com/job-detail/2287fa6d-3dc4-4e2f-b9ba-2431f9727370"
   },
   {
    "score": 85,
@@ -229,7 +243,8 @@
    "source": "Indeed",
    "route": "Workday",
    "status": "waiting_kevin",
-   "url": "https://www.indeed.com/viewjob?jk=d415e4c00bbe98e7"
+   "url": "https://www.indeed.com/viewjob?jk=d415e4c00bbe98e7",
+   "apply_url": "https://worldwide.wd1.myworkdayjobs.com/en-US/External/job/Research-Triangle-Park-North-Carolina/Senior-Business-Analyst--AI-Evaluation---Value-Realization_JR103242"
   },
   {
    "score": 85,
@@ -240,7 +255,8 @@
    "source": "Dice",
    "route": "Dice Easy Apply",
    "status": "skipped",
-   "url": "https://www.dice.com/job-detail/3e486327-bc76-4b88-88d5-cc6d98f0d053"
+   "url": "https://www.dice.com/job-detail/3e486327-bc76-4b88-88d5-cc6d98f0d053",
+   "apply_url": "https://www.dice.com/job-detail/3e486327-bc76-4b88-88d5-cc6d98f0d053"
   },
   {
    "score": 83,
@@ -251,7 +267,8 @@
    "source": "Indeed",
    "route": "Company site",
    "status": "applied",
-   "url": "https://www.indeed.com/viewjob?jk=1eef21a5c7b19ed9"
+   "url": "https://www.indeed.com/viewjob?jk=1eef21a5c7b19ed9",
+   "apply_url": "https://jobs.smartrecruiters.com/NBCUniversal3/744000159485098-senior-business-analyst-sales-automation"
   },
   {
    "score": 82,
@@ -261,8 +278,9 @@
    "salary": "$48.00 - $52.25/hr",
    "source": "Dice",
    "route": "Company site",
-   "status": "waiting_kevin",
-   "url": "https://www.dice.com/job-detail/5fd2f9cd-086e-40d4-b17a-07d8d1661460"
+   "status": "skipped",
+   "url": "https://www.dice.com/job-detail/5fd2f9cd-086e-40d4-b17a-07d8d1661460",
+   "apply_url": "https://www.dice.com/job-detail/5fd2f9cd-086e-40d4-b17a-07d8d1661460"
   },
   {
    "score": 80,
@@ -273,7 +291,8 @@
    "source": "Indeed",
    "route": "Company site",
    "status": "waiting_kevin",
-   "url": "https://www.indeed.com/viewjob?jk=fbc61e0661e4a873"
+   "url": "https://www.indeed.com/viewjob?jk=fbc61e0661e4a873",
+   "apply_url": "https://ir-jobs.dzconnex.com/job-details/it-business-analyst-in-information-technology-jobs-1783986"
   },
   {
    "score": 78,
@@ -284,7 +303,8 @@
    "source": "Indeed",
    "route": "Company site",
    "status": "queued",
-   "url": "https://www.indeed.com/viewjob?jk=c37485caddb7e7a7"
+   "url": "https://www.indeed.com/viewjob?jk=c37485caddb7e7a7",
+   "apply_url": "https://www.jobs.abbott/us/en/job/ABLAUS31166573ENUSEXTERNAL/Sr-Business-Analyst"
   },
   {
    "score": 77,
@@ -295,7 +315,8 @@
    "source": "Indeed",
    "route": "Company site",
    "status": "waiting_kevin",
-   "url": "https://www.indeed.com/viewjob?jk=2e7e986e3c427d7e"
+   "url": "https://www.indeed.com/viewjob?jk=2e7e986e3c427d7e",
+   "apply_url": "https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=4c9a1f1d-ff7a-41e9-9b4a-aecb5ca84ec4&jobId=577444"
   },
   {
    "score": 77,
@@ -306,7 +327,8 @@
    "source": "Indeed",
    "route": "Company site",
    "status": "skipped",
-   "url": "https://www.indeed.com/viewjob?jk=195d201f23bdaae2"
+   "url": "https://www.indeed.com/viewjob?jk=195d201f23bdaae2",
+   "apply_url": "https://sourcebooks.applytojob.com/apply/KwAz9UaBI7/Business-Analyst-II"
   },
   {
    "score": 75,
@@ -317,7 +339,8 @@
    "source": "Indeed",
    "route": "Company site",
    "status": "waiting_kevin",
-   "url": "https://www.indeed.com/viewjob?jk=836a5bd936b46f8e"
+   "url": "https://www.indeed.com/viewjob?jk=836a5bd936b46f8e",
+   "apply_url": "https://quiktrakemployee.bamboohr.com/careers/163"
   },
   {
    "score": 70,
@@ -327,8 +350,9 @@
    "salary": "$78,100 - $117,100/yr",
    "source": "Indeed",
    "route": "Company site",
-   "status": "waiting_kevin",
-   "url": "https://www.indeed.com/viewjob?jk=03b3029de6ab82a6"
+   "status": "queued",
+   "url": "https://www.indeed.com/viewjob?jk=03b3029de6ab82a6",
+   "apply_url": "https://sjobs.brassring.com/TGnewUI/Search/home/HomeWithPreLoad?partnerid=26281&siteid=6660&PageType=JobDetails&jobid=1439320"
   },
   {
    "score": 70,
@@ -339,7 +363,8 @@
    "source": "Indeed",
    "route": "Company site",
    "status": "skipped",
-   "url": "https://www.indeed.com/viewjob?jk=45e3123265426c3d"
+   "url": "https://www.indeed.com/viewjob?jk=45e3123265426c3d",
+   "apply_url": "https://municipalaccountsconsulting.applytojob.com/apply/Oona1O5qcI/Accounting-Systems-Business-Analyst-Functional-Lead-Contract"
   }
  ],
  "jobs": [
