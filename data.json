@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T17:58:00Z",
+ "updated": "2026-11-04T18:05:00Z",
  "next_run": "2026-11-05T12:23:00Z",
  "run_date": "2026-11-04",
  "counts": {
@@ -8,9 +8,9 @@
   "ready": 17,
   "scored70": 19,
   "tailored": 19,
-  "applied": 2,
+  "applied": 4,
   "in_progress": 0,
-  "waiting_kevin": 10
+  "waiting_kevin": 8
  },
  "agents": {
   "captain": {
@@ -121,6 +121,10 @@
     {
      "at": "2026-11-04T17:56:00Z",
      "text": "Skipped Kforce (Florida, on Kevin's request)"
+    },
+    {
+     "at": "2026-11-04T18:05:00Z",
+     "text": "Submitted 2 Dice applications (4 total today)"
     }
    ]
   },
@@ -158,7 +162,7 @@
    "salary": "$55/hr",
    "source": "Dice",
    "route": "Dice Easy Apply",
-   "status": "kevin_to_apply",
+   "status": "applied",
    "url": "https://www.dice.com/job-detail/508513c3-f710-4d03-b74f-5d1a222a12bc",
    "apply_url": "https://www.dice.com/job-detail/508513c3-f710-4d03-b74f-5d1a222a12bc"
   },
@@ -170,7 +174,7 @@
    "salary": "USD 60.00 - 62.00/hr",
    "source": "Dice",
    "route": "Company site",
-   "status": "kevin_to_apply",
+   "status": "waiting_kevin",
    "url": "https://www.dice.com/job-detail/533628ce-6a22-4492-8fd7-b8fcb11d2d88",
    "apply_url": "https://www.dice.com/job-detail/533628ce-6a22-4492-8fd7-b8fcb11d2d88"
   },
@@ -230,7 +234,7 @@
    "salary": "Not posted",
    "source": "Dice",
    "route": "Dice Easy Apply",
-   "status": "kevin_to_apply",
+   "status": "applied",
    "url": "https://www.dice.com/job-detail/2287fa6d-3dc4-4e2f-b9ba-2431f9727370",
    "apply_url": "https://www.dice.com/job-detail/2287fa6d-3dc4-4e2f-b9ba-2431f9727370"
   },
