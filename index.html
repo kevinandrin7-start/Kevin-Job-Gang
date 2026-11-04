@@ -69,7 +69,7 @@ canvas{display:block;width:100%;height:100%;position:absolute;inset:0}
 .jobs a:hover{text-decoration:underline}
 .jobs .sal{font-variant-numeric:tabular-nums;white-space:nowrap}
 .pill{display:inline-block;font-size:11.5px;font-weight:500;padding:3px 9px;border-radius:999px;white-space:nowrap;background:#1a2133;color:var(--muted)}
-.pill.applied{background:rgba(74,245,160,.14);color:var(--turtle)}
+.pill.interviewing,.pill.offer,.pill.applied{background:rgba(74,245,160,.14);color:var(--turtle)}
 .pill.in_progress{background:rgba(74,214,245,.14);color:var(--scout)}
 .pill.waiting_kevin,.pill.kevin_to_apply{background:rgba(255,215,106,.13);color:var(--kevin)}
 .pill.skipped{background:rgba(255,92,108,.10);color:#d07a84}
@@ -337,7 +337,7 @@ cv.addEventListener('click',ev=>{ const r=cv.getBoundingClientRect(),x=ev.client
   for(const k in AG){ const n=NODES[k]; if(Math.hypot(n.x-x,n.y-y)<34){ select(k); if(innerWidth<900) detail.scrollIntoView({behavior:'smooth',block:'center'}); return; } } });
 
 /* ---------- jobs table ---------- */
-const ST = {applied:'Applied',in_progress:'Applying now',waiting_kevin:'Waiting on Kevin',kevin_to_apply:'Kevin applies (Easy Apply)',queued:'Queued',ready:'Ready to apply',skipped:'Skipped',scored:'Scored'};
+const ST = {applied:'Applied',in_progress:'Applying now',waiting_kevin:'Waiting on Kevin',kevin_to_apply:'Kevin applies (Easy Apply)',queued:'Queued',ready:'Ready to apply',skipped:'Skipped',scored:'Scored',interviewing:'Interviewing',offer:'Offer',rejected:'Rejected',ghosted:'No reply'};
 let filt='all';
 function renderJobs(){
   const top=DATA.top, cnt=s=>top.filter(j=>s==='all'||(s==='open'?!['applied','skipped'].includes(j.status):j.status===s)).length;

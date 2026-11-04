@@ -4,9 +4,9 @@
  "run_date": "2026-11-04",
  "counts": {
   "found": 111,
-  "skipped": 14,
-  "ready": 14,
-  "scored70": 15,
+  "skipped": 10,
+  "ready": 17,
+  "scored70": 19,
   "tailored": 19,
   "applied": 2,
   "in_progress": 0,
@@ -189,6 +189,17 @@
   },
   {
    "score": 86,
+   "company": "Capgemini",
+   "title": "Business Analyst",
+   "location": "Remote",
+   "salary": "$41.61 - $65.01/hr",
+   "source": "Indeed",
+   "route": "Company site",
+   "status": "skipped",
+   "url": "https://www.indeed.com/viewjob?jk=baf19ee9d8fe7f20"
+  },
+  {
+   "score": 86,
    "company": "Cognizant",
    "title": "Senior Business Analyst, Senior Consultant – Finance Platforms, Capital Markets",
    "location": "Washington, DC",
@@ -219,6 +230,17 @@
    "route": "Workday",
    "status": "waiting_kevin",
    "url": "https://www.indeed.com/viewjob?jk=d415e4c00bbe98e7"
+  },
+  {
+   "score": 85,
+   "company": "eSystems, Inc.",
+   "title": "Business Analyst (MMIS experience required)",
+   "location": "Remote",
+   "salary": "Not posted",
+   "source": "Dice",
+   "route": "Dice Easy Apply",
+   "status": "skipped",
+   "url": "https://www.dice.com/job-detail/3e486327-bc76-4b88-88d5-cc6d98f0d053"
   },
   {
    "score": 83,
@@ -276,6 +298,17 @@
    "url": "https://www.indeed.com/viewjob?jk=2e7e986e3c427d7e"
   },
   {
+   "score": 77,
+   "company": "Sourcebooks, Inc.",
+   "title": "Business Analyst II",
+   "location": "Naperville, IL · remote",
+   "salary": "$105,000 - $125,000/yr",
+   "source": "Indeed",
+   "route": "Company site",
+   "status": "skipped",
+   "url": "https://www.indeed.com/viewjob?jk=195d201f23bdaae2"
+  },
+  {
    "score": 75,
    "company": "Quiktrak",
    "title": "Business Analyst",
@@ -296,6 +329,17 @@
    "route": "Company site",
    "status": "waiting_kevin",
    "url": "https://www.indeed.com/viewjob?jk=03b3029de6ab82a6"
+  },
+  {
+   "score": 70,
+   "company": "Municipal Accounts & Consulting, L.P.",
+   "title": "Accounting Systems Business Analyst - Functional Lead - Contract",
+   "location": "Remote",
+   "salary": "$80/hr",
+   "source": "Indeed",
+   "route": "Company site",
+   "status": "skipped",
+   "url": "https://www.indeed.com/viewjob?jk=45e3123265426c3d"
   }
  ],
  "jobs": [
@@ -304,133 +348,133 @@
    "title": "Senior Business Technical Analyst",
    "source": "Indeed",
    "score": 90,
-   "status": "tailored"
+   "status": "scored"
   },
   {
    "company": "iSpace, Inc",
    "title": "Business Analyst III– Data Intelligence",
    "source": "Dice",
    "score": 90,
-   "status": "tailored"
+   "status": "scored"
   },
   {
    "company": "Computer Merchant, Ltd., The",
    "title": "Business Analyst-Healthcare",
    "source": "Dice",
    "score": 87,
-   "status": "tailored"
+   "status": "scored"
   },
   {
    "company": "EyeSouth Partners",
    "title": "Sr. Business Analyst, Revenue Cycle",
    "source": "Indeed",
    "score": 87,
-   "status": "tailored"
+   "status": "scored"
   },
   {
    "company": "Robert Half",
    "title": "Senior Business Analyst, Marketing",
    "source": "Indeed",
    "score": 87,
-   "status": "applied"
+   "status": "scored"
   },
   {
    "company": "Capgemini",
    "title": "Business Analyst",
    "source": "Indeed",
    "score": 86,
-   "status": "skipped"
+   "status": "scored"
   },
   {
    "company": "Cognizant",
    "title": "Senior Business Analyst, Senior Consultant – Finance Platforms, Capital Markets",
    "source": "Indeed",
    "score": 86,
-   "status": "tailored"
+   "status": "scored"
   },
   {
    "company": "Sage IT Inc",
    "title": "Senior Business Analyst - Healthcare - Remote",
    "source": "Dice",
    "score": 85,
-   "status": "tailored"
+   "status": "scored"
   },
   {
    "company": "Worldwide Clinical Trials",
    "title": "Senior Business Analyst, AI Evaluation & Value Realization",
    "source": "Indeed",
    "score": 85,
-   "status": "tailored"
+   "status": "scored"
   },
   {
    "company": "eSystems, Inc.",
    "title": "Business Analyst (MMIS experience required)",
    "source": "Dice",
    "score": 85,
-   "status": "skipped"
+   "status": "scored"
   },
   {
    "company": "NBCUniversal",
    "title": "Senior Business Analyst, Sales Automation",
    "source": "Indeed",
    "score": 83,
-   "status": "applied"
+   "status": "scored"
   },
   {
    "company": "Kforce Technology Staffing",
    "title": "Business Analyst",
    "source": "Dice",
    "score": 82,
-   "status": "tailored"
+   "status": "scored"
   },
   {
    "company": "Ingersoll-Rand",
    "title": "IT Business Analyst",
    "source": "Indeed",
    "score": 80,
-   "status": "tailored"
+   "status": "scored"
   },
   {
    "company": "Abbott",
    "title": "Sr Business Analyst",
    "source": "Indeed",
    "score": 78,
-   "status": "tailored"
+   "status": "scored"
   },
   {
    "company": "Creative Information Technology India",
    "title": "Digital Signage Business Analyst – Remote/Hybrid - St. Paul, MN",
    "source": "Indeed",
    "score": 77,
-   "status": "tailored"
+   "status": "scored"
   },
   {
    "company": "Sourcebooks, Inc.",
    "title": "Business Analyst II",
    "source": "Indeed",
    "score": 77,
-   "status": "skipped"
+   "status": "scored"
   },
   {
    "company": "Quiktrak",
    "title": "Business Analyst",
    "source": "Indeed",
    "score": 75,
-   "status": "tailored"
+   "status": "scored"
   },
   {
    "company": "Harbor Freight Tools",
    "title": "IT Business Analyst (Warranties & Claims) - Remote",
    "source": "Indeed",
    "score": 70,
-   "status": "tailored"
+   "status": "scored"
   },
   {
    "company": "Municipal Accounts & Consulting, L.P.",
    "title": "Accounting Systems Business Analyst - Functional Lead - Contract",
    "source": "Indeed",
    "score": 70,
-   "status": "skipped"
+   "status": "scored"
   },
   {
    "company": "Jean Martin, Inc",
