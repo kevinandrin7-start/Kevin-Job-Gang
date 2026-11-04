@@ -102,7 +102,12 @@ canvas{display:block;width:100%;height:100%;position:absolute;inset:0}
 #lock .row{flex-direction:row;align-items:center;gap:8px}
 #lock button[type=submit]{background:var(--scout);color:#04131a;border:0;font-weight:600;font-size:14px;padding:11px;border-radius:9px}
 #lock .err{color:var(--bad);font-size:12.5px;min-height:16px;text-align:center}
-#signout{margin-left:6px}
+#signout,#msgcrew{margin-left:6px}
+.drawer .acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.drawer .acts a{font-size:11.5px;font-weight:600;text-decoration:none;padding:3px 9px;border-radius:6px;border:1px solid var(--line);color:var(--text);background:var(--panel)}
+.drawer .acts a.ok{border-color:rgba(74,245,160,.5);color:var(--turtle)}
+.drawer .acts a.no{border-color:rgba(255,92,108,.4);color:#e48b95}
+.drawer .hint{font-size:11.5px;color:var(--faint);margin-top:8px;line-height:1.4}
 footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
 @media (max-width:700px){
   .jobs thead{display:none}
@@ -140,7 +145,7 @@ footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
   <h1>Kevin's Job Gang<small id="sub">Four agents, one Ledger. Replaying the latest run.</small></h1>
   <div class="controls">
     <span class="live" id="clock"></span>
-    <div class="seg"><button id="m-live" class="on"><span class="dot"></span>Live</button><button id="m-replay">Replay</button></div><button id="signout" hidden>Sign out</button>
+    <div class="seg"><button id="m-live" class="on"><span class="dot"></span>Live</button><button id="m-replay">Replay</button></div><button id="msgcrew">Message the crew</button><button id="signout" hidden>Sign out</button>
   </div>
 </header>
 <main>
@@ -402,14 +407,25 @@ function renderAgents(){
   detail.style.setProperty('--c',c);
   const linksFor=x=>{ const L=DATA.top.filter(j=>j.apply_url && x.toLowerCase().includes(j.company.split(/[ ,.-]/)[0].toLowerCase()));
     return L.length?`<div class="links">${L.map(j=>`<a href="${esc(j.apply_url)}" target="_blank" rel="noopener">${esc(j.company.split(/[,.]/)[0])} ↗</a>`).join('')}</div>`:''; };
-  const q=(st.queue||[]).map(x=>`<li class="q">${esc(x)}${linksFor(x)}</li>`).join('') || '<div class="none">Nothing pending.</div>';
+  const acts=x=>`<div class="acts"><a class="ok" target="_blank" rel="noopener" href="${esc(replyURL(AG[k].label,x,'Done'))}">Done ✓</a><a class="no" target="_blank" rel="noopener" href="${esc(replyURL(AG[k].label,x,'Skip'))}">Skip</a><a target="_blank" rel="noopener" href="${esc(replyURL(AG[k].label,x,'Reply'))}">Reply…</a></div>`;
+  const q=(st.queue||[]).map(x=>`<li class="q">${esc(x)}${linksFor(x)}${acts(x)}</li>`).join('') || '<div class="none">Nothing pending.</div>';
   const h=(st.history||[]).slice().sort((a,b)=>a.at<b.at?1:-1).map(x=>`<li><time>${fmtT(x.at)}</time>${esc(x.text)}</li>`).join('') || '<div class="none">No actions yet.</div>';
   detail.innerHTML=`<div class="head"><img src="${AVATAR_URL[k]}" alt=""><div><strong style="color:${c}">${AG[k].label}</strong> <span style="font-family:JetBrains Mono,monospace;font-size:11px">${AG[k].sub}</span><br>${AG[k].role}</div></div>
-    <h3>Pending (${(st.queue||[]).length})</h3><ul>${q}</ul><h3>Past actions</h3><ul>${h}</ul>`;
+    <h3>Pending (${(st.queue||[]).length})</h3><ul>${q}</ul>${(st.queue||[]).length?'<div class="hint">Done, Skip and Reply open a ready-made note on GitHub. Tap Submit and the crew picks it up within a few minutes. Codes and passwords go into the job site itself, never into the note.</div>':''}<h3>Past actions</h3><ul>${h}</ul>`;
 }
 function select(k){ selected=k; renderAgents(); NODES[k].act=1; }
 cv.addEventListener('click',ev=>{ const r=cv.getBoundingClientRect(),x=ev.clientX-r.left,y=ev.clientY-r.top;
   for(const k in AG){ const n=NODES[k]; if(Math.hypot(n.x-x,n.y-y)<34){ select(k); if(innerWidth<900) detail.scrollIntoView({behavior:'smooth',block:'center'}); return; } } });
+
+/* ---------- replies to agents: prefilled GitHub issues ---------- */
+const REPO='https://github.com/kevinandrin7-start/Kevin-Job-Gang';
+function replyURL(agent,item,reply){
+  const short=(item||'').split(':')[0].slice(0,60);
+  const title=`[${agent}] ${reply==='Reply'?'Reply':reply}${short?': '+short:''}`;
+  const body=`Agent: ${agent}\nItem: ${item||'(general message)'}\nReply: ${reply==='Reply'?'':reply}\n\n<!-- Write any extra note above. This repo is public: never put codes, passwords or personal details here. -->`;
+  return `${REPO}/issues/new?labels=agent-reply&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+}
+document.getElementById('msgcrew').onclick=()=>window.open(replyURL('Captain','', 'Reply'),'_blank','noopener');
 
 /* ---------- jobs table ---------- */
 const ST = {applied:'Applied',in_progress:'Applying now',waiting_kevin:'Waiting on Kevin',kevin_to_apply:'Dice Easy Apply',queued:'Queued',ready:'Ready to apply',skipped:'Skipped',scored:'Scored',interviewing:'Interviewing',offer:'Offer',rejected:'Rejected',ghosted:'No reply'};
