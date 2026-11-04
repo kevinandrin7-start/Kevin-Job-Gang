@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T19:41:00Z",
+ "updated": "2026-11-04T19:44:00Z",
  "next_run": "2026-11-05T12:23:00Z",
  "run_date": "2026-11-04",
  "counts": {
@@ -10,7 +10,7 @@
   "tailored": 19,
   "applied": 5,
   "in_progress": 0,
-  "waiting_kevin": 6
+  "waiting_kevin": 5
  },
  "agents": {
   "captain": {
@@ -88,11 +88,12 @@
    ]
   },
   "turtle": {
-   "status": "waiting",
+   "status": "working",
    "queue": [
+    "Worldwide Clinical Trials: filling in now",
+    "Ingersoll Rand: next",
     "Computer Merchant: waiting for Kevin to pass the site's human check",
-    "Harbor Freight: waiting for Kevin to sign in or create an account",
-    "Worldwide Clinical Trials, Ingersoll Rand, EyeSouth: waiting for Kevin to create accounts",
+    "Harbor Freight: waiting for Kevin to sign in",
     "ADP and Abbott: waiting for Kevin to enter the email code",
     "Quiktrak: waiting for Kevin's decision"
    ],
@@ -193,7 +194,7 @@
    "salary": "Not posted",
    "source": "Indeed",
    "route": "iCIMS",
-   "status": "waiting_kevin",
+   "status": "skipped",
    "url": "https://www.indeed.com/viewjob?jk=769ac1275c8af327",
    "apply_url": "https://careers-eyesouthpartners.icims.com/jobs/10380/job"
   },
