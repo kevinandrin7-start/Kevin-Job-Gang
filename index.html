@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Job Hunt Network</title>
+<title>Kevin's Job Gang</title>
 <meta name="description" content="Live view of Kevin's job hunt agents passing data to each other.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,7 +44,10 @@ canvas{display:block;width:100%;height:100%;position:absolute;inset:0}
 .agents{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .agent{display:flex;gap:8px;align-items:flex-start;padding:8px;border-radius:10px;background:var(--panel2);cursor:pointer;border:1px solid transparent}
 .agent.sel{border-color:var(--c)}
-.agent i{flex:none;width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c);margin-top:4px}
+.agent .av{flex:none;width:38px;height:38px;border-radius:50%;box-shadow:0 0 0 2px var(--c),0 0 12px var(--c)}
+.agent{align-items:center}
+.drawer .head{display:flex;gap:12px;align-items:center;margin-bottom:6px}
+.drawer .head img{width:64px;height:64px;border-radius:50%;box-shadow:0 0 0 2px var(--c),0 0 18px var(--c);flex:none}
 .agent b{font-size:13px;display:block}
 .agent span{font-size:11px;color:var(--muted)}
 .detail{font-size:13px;color:var(--muted);line-height:1.5;margin-top:10px;min-height:40px}
@@ -108,7 +111,7 @@ footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
 </head>
 <body>
 <header>
-  <h1>Job Hunt Network<small id="sub">Five agents, one Ledger. Replaying the latest run.</small></h1>
+  <h1>Kevin's Job Gang<small id="sub">Five agents, one Ledger. Replaying the latest run.</small></h1>
   <div class="controls">
     <span class="live" id="clock"></span>
     <div class="seg"><button id="m-live" class="on"><span class="dot"></span>Live</button><button id="m-replay">Replay</button></div>
@@ -144,6 +147,7 @@ footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
 </main>
 <footer>Built from the job hunt Ledger. Only public posting info is shown here (company, title, location, salary as posted, score); resumes, form answers and keys stay private. <b>Live</b> shows what each agent is doing and waiting on now; <b>Replay</b> plays back today's run. Tap an agent for its queue and history.</footer>
 
+<script src="avatars.js"></script>
 <script>
 (async function(){
 const css = n => getComputedStyle(document.documentElement).getPropertyValue('--'+n).trim();
@@ -173,6 +177,7 @@ const EDGES = [['indeed','scout'],['dice','scout'],['gmail','scout'],['captain',
 const E = {}; EDGES.forEach(([a,b],i)=>{ E[a+'>'+b]={a,b,heat:0,bend:(i%2?1:-1)*.12}; });
 [['scout','captain'],['kevin','captain'],['turtle','kevin']].forEach(([a,b])=>{ E[a+'>'+b].bend=.2; E[b+'>'+a].bend=.2; });
 
+const IMG={}; for(const k in AVATAR_URL){ IMG[k]=new Image(); IMG[k].src=AVATAR_URL[k]; }
 const cv = document.getElementById('cv'), ctx = cv.getContext('2d'), stage = document.getElementById('stage');
 let W=0,H=0,DPR=1,tall=false;
 function resize(){
@@ -329,7 +334,7 @@ function renderAgents(){
   Object.entries(AG).forEach(([k,a])=>{
     const st=DATA.agents[k]||{}, n=(st.queue||[]).length;
     const d=document.createElement('div'); d.className='agent'+(k===selected?' sel':''); d.style.setProperty('--c',css(NODES[k].c));
-    d.innerHTML=`<i></i><div><b>${a.label}</b><span>${STATUS_TXT[st.status]||''}${n?` · ${n} pending`:''}</span></div>`;
+    d.innerHTML=`<img class="av" src="${AVATAR_URL[k]}" alt=""><div><b>${a.label}</b><span>${STATUS_TXT[st.status]||''}${n?` · ${n} pending`:''}</span></div>`;
     d.onclick=()=>select(k); agentsEl.append(d);
   });
   const k=selected, st=DATA.agents[k]||{}, c=css(NODES[k].c);
@@ -338,7 +343,7 @@ function renderAgents(){
     return L.length?`<div class="links">${L.map(j=>`<a href="${esc(j.apply_url)}" target="_blank" rel="noopener">${esc(j.company.split(/[,.]/)[0])} ↗</a>`).join('')}</div>`:''; };
   const q=(st.queue||[]).map(x=>`<li class="q">${esc(x)}${linksFor(x)}</li>`).join('') || '<div class="none">Nothing pending.</div>';
   const h=(st.history||[]).slice().sort((a,b)=>a.at<b.at?1:-1).map(x=>`<li><time>${fmtT(x.at)}</time>${esc(x.text)}</li>`).join('') || '<div class="none">No actions yet.</div>';
-  detail.innerHTML=`<strong style="color:${c}">${AG[k].label}</strong> <span style="font-family:JetBrains Mono,monospace;font-size:11px">${AG[k].sub}</span><br>${AG[k].role}
+  detail.innerHTML=`<div class="head"><img src="${AVATAR_URL[k]}" alt=""><div><strong style="color:${c}">${AG[k].label}</strong> <span style="font-family:JetBrains Mono,monospace;font-size:11px">${AG[k].sub}</span><br>${AG[k].role}</div></div>
     <h3>Pending (${(st.queue||[]).length})</h3><ul>${q}</ul><h3>Past actions</h3><ul>${h}</ul>`;
 }
 function select(k){ selected=k; renderAgents(); NODES[k].act=1; }
@@ -380,7 +385,7 @@ function drawEdges(){
 }
 function drawNodes(now){
   for(const k in NODES){ const n=NODES[k], col=css(n.c), st=DATA.agents[k]?.status;
-    const base = n.kind==='agent'?20:n.kind==='store'?22:n.kind==='human'?17:14;
+    const base = n.kind==='agent'?(tall?24:30):n.kind==='store'?22:n.kind==='human'?17:14;
     const pulse = Math.sin(now/700 + n.x)*.5+.5, r = base + n.act*7;
     const dim = st==='idle'||st==='done' ? .55 : 1;
     const glow = (.18 + n.act*.55 + (st==='active'?pulse*.25:0) + (st==='waiting'?pulse*.25:0))*dim;
@@ -393,7 +398,9 @@ function drawNodes(now){
     else if(n.kind==='src') ctx.roundRect(n.x-r,n.y-r,r*2,r*2,5);
     else ctx.arc(n.x,n.y,r,0,7);
     ctx.fill(); ctx.stroke();
-    ctx.fillStyle=hex2rgba(col,(.35+n.act*.65)*dim); ctx.beginPath(); ctx.arc(n.x,n.y,r*.38,0,7); ctx.fill();
+    if(IMG[k]&&IMG[k].complete){ ctx.save(); ctx.beginPath(); ctx.arc(n.x,n.y,r-1.5,0,7); ctx.clip(); ctx.globalAlpha=dim<1?.8:1;
+      ctx.drawImage(IMG[k],n.x-r,n.y-r,r*2,r*2); ctx.restore(); ctx.strokeStyle=hex2rgba(col,(.6+n.act*.4)); ctx.lineWidth=k===selected?3:2; ctx.beginPath(); ctx.arc(n.x,n.y,r,0,7); ctx.stroke(); }
+    else { ctx.fillStyle=hex2rgba(col,(.35+n.act*.65)*dim); ctx.beginPath(); ctx.arc(n.x,n.y,r*.38,0,7); ctx.fill(); }
     if(st==='waiting'||st==='active'||k===selected){ ctx.strokeStyle=hex2rgba(col,k===selected?.9:.6); ctx.lineWidth=1.5; ctx.setLineDash([4,5]); ctx.lineDashOffset=-now/60;
       ctx.beginPath(); ctx.arc(n.x,n.y,r+8,0,7); ctx.stroke(); ctx.setLineDash([]); }
     ctx.font='600 12px Inter, sans-serif'; ctx.textAlign='center'; ctx.fillStyle='#e6ebf5';
