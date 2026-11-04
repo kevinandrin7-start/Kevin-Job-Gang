@@ -89,6 +89,20 @@ canvas{display:block;width:100%;height:100%;position:absolute;inset:0}
 .top .t{min-width:0}
 .top .t div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .top .t small{color:var(--muted)}
+#lock{position:fixed;inset:0;z-index:50;background:radial-gradient(ellipse at 50% 30%,#101a38 0%,var(--bg) 70%);display:flex;align-items:center;justify-content:center;padding:16px}
+#lock[hidden]{display:none}
+#lock form{width:100%;max-width:360px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px 22px;display:flex;flex-direction:column;gap:12px}
+#lock .crew{display:flex;justify-content:center;margin-bottom:4px}
+#lock .crew img{width:46px;height:46px;border-radius:50%;margin:0 -5px;border:2px solid var(--panel)}
+#lock h2{margin:0;text-align:center;font-size:19px}
+#lock p{margin:0 0 4px;text-align:center;color:var(--muted);font-size:13px}
+#lock label{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:5px}
+#lock input[type=email],#lock input[type=password]{font:14px Inter,sans-serif;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:10px 12px;outline:none}
+#lock input:focus{border-color:var(--scout)}
+#lock .row{flex-direction:row;align-items:center;gap:8px}
+#lock button[type=submit]{background:var(--scout);color:#04131a;border:0;font-weight:600;font-size:14px;padding:11px;border-radius:9px}
+#lock .err{color:var(--bad);font-size:12.5px;min-height:16px;text-align:center}
+#signout{margin-left:6px}
 footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
 @media (max-width:700px){
   .jobs thead{display:none}
@@ -110,11 +124,23 @@ footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
 </style>
 </head>
 <body>
+<div id="lock" hidden>
+  <form id="lockform" autocomplete="on">
+    <div class="crew" id="crew"></div>
+    <h2>Kevin's Job Gang</h2>
+    <p>Sign in to see the crew at work.</p>
+    <label>Email<input type="email" id="lk-email" autocomplete="username" required></label>
+    <label>Password<input type="password" id="lk-pw" autocomplete="current-password" required></label>
+    <label class="row"><input type="checkbox" id="lk-keep"> Keep me signed in on this device</label>
+    <button type="submit" id="lk-go">Sign in</button>
+    <div class="err" id="lk-err"></div>
+  </form>
+</div>
 <header>
   <h1>Kevin's Job Gang<small id="sub">Four agents, one Ledger. Replaying the latest run.</small></h1>
   <div class="controls">
     <span class="live" id="clock"></span>
-    <div class="seg"><button id="m-live" class="on"><span class="dot"></span>Live</button><button id="m-replay">Replay</button></div>
+    <div class="seg"><button id="m-live" class="on"><span class="dot"></span>Live</button><button id="m-replay">Replay</button></div><button id="signout" hidden>Sign out</button>
   </div>
 </header>
 <main>
@@ -151,9 +177,47 @@ footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
 <script>
 (async function(){
 const css = n => getComputedStyle(document.documentElement).getPropertyValue('--'+n).trim();
-let DATA;
-async function load(){ DATA = await (await fetch('data.json?t='+Date.now(),{cache:'no-store'})).json(); }
-try { await load(); } catch(e){ document.getElementById('caption').textContent='Could not load data.json'; return; }
+/* ---------- data + lock ---------- */
+const b64d = s => Uint8Array.from(atob(s), c=>c.charCodeAt(0));
+const b64e = b => btoa(String.fromCharCode(...new Uint8Array(b)));
+const KEYNAME='kjg-key';
+const store = { get(){ try{ return sessionStorage.getItem(KEYNAME)||localStorage.getItem(KEYNAME); }catch(e){ return null; } },
+  set(v,keep){ try{ (keep?localStorage:sessionStorage).setItem(KEYNAME,v); }catch(e){} },
+  clear(){ try{ sessionStorage.removeItem(KEYNAME); localStorage.removeItem(KEYNAME); }catch(e){} } };
+async function fetchJSON(u){ const r=await fetch(u+'?t='+Date.now(),{cache:'no-store'}); if(!r.ok) throw new Error(r.status); return r.json(); }
+async function deriveKey(email,pw,enc){
+  const base=await crypto.subtle.importKey('raw',new TextEncoder().encode(email.trim().toLowerCase()+'\n'+pw),'PBKDF2',false,['deriveBits']);
+  return crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:b64d(enc.salt),iterations:enc.iter},base,256);
+}
+async function decrypt(enc,raw){
+  const key=await crypto.subtle.importKey('raw',raw,'AES-GCM',false,['decrypt']);
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64d(enc.iv)},key,b64d(enc.ct));
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+let DATA, locked=false;
+async function load(){
+  let enc=null; try{ enc=await fetchJSON('data.enc.json'); }catch(e){}
+  if(!enc){ DATA=await fetchJSON('data.json'); return; }
+  locked=true; document.getElementById('signout').hidden=false;
+  const cached=store.get();
+  if(cached){ try{ DATA=await decrypt(enc,b64d(cached)); return; }catch(e){ store.clear(); } }
+  DATA=await askLogin(enc);
+}
+function askLogin(enc){
+  const lock=document.getElementById('lock'), f=document.getElementById('lockform'), err=document.getElementById('lk-err'), go=document.getElementById('lk-go');
+  document.getElementById('crew').innerHTML=['captain','scout','tailor','turtle'].map(k=>`<img src="${AVATAR_URL[k]}" alt="">`).join('');
+  lock.hidden=false; document.getElementById('lk-email').focus();
+  return new Promise(res=>{
+    f.onsubmit=async ev=>{ ev.preventDefault(); err.textContent=''; go.disabled=true; go.textContent='Checking…';
+      try{ const raw=await deriveKey(document.getElementById('lk-email').value,document.getElementById('lk-pw').value,enc);
+        const d=await decrypt(enc,raw); store.set(b64e(raw),document.getElementById('lk-keep').checked);
+        document.getElementById('lk-pw').value=''; lock.hidden=true; res(d);
+      }catch(e){ err.textContent='That email and password don\'t match.'; }
+      go.disabled=false; go.textContent='Sign in'; };
+  });
+}
+document.getElementById('signout').onclick=()=>{ store.clear(); location.reload(); };
+try { await load(); } catch(e){ document.getElementById('caption').textContent='Could not load the dashboard data.'; return; }
 
 /* ---------- graph ---------- */
 const AG = {
@@ -437,7 +501,11 @@ function frame(now){
 }
 
 // refresh data every minute so Live follows new pushes
-setInterval(async()=>{ const before=DATA.updated; try{ await load(); if(DATA.updated!==before) renderAll(); }catch(e){} }, 60000);
+setInterval(async()=>{ const before=DATA.updated;
+  try{ if(locked){ const enc=await fetchJSON('data.enc.json'), c=store.get(); if(!c) return location.reload();
+         try{ DATA=await decrypt(enc,b64d(c)); }catch(e){ store.clear(); return location.reload(); } }
+       else DATA=await fetchJSON('data.json');
+       if(DATA.updated!==before) renderAll(); }catch(e){} }, 60000);
 
 resize(); renderAll(); requestAnimationFrame(frame);
 })();
