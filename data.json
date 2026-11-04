@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T18:23:00Z",
+ "updated": "2026-11-04T19:40:00Z",
  "next_run": "2026-11-05T12:23:00Z",
  "run_date": "2026-11-04",
  "counts": {
@@ -8,9 +8,9 @@
   "ready": 17,
   "scored70": 19,
   "tailored": 19,
-  "applied": 4,
+  "applied": 5,
   "in_progress": 0,
-  "waiting_kevin": 8
+  "waiting_kevin": 7
  },
  "agents": {
   "captain": {
@@ -88,7 +88,7 @@
    "queue": [
     "Computer Merchant: waiting for Kevin to pass the site's human check",
     "Harbor Freight: waiting for Kevin to sign in or create an account",
-    "Cognizant, Centene, Worldwide Clinical Trials, Ingersoll Rand, EyeSouth: waiting for Kevin to create accounts",
+    "Cognizant, Worldwide Clinical Trials, Ingersoll Rand, EyeSouth: waiting for Kevin to create accounts",
     "ADP and Abbott: waiting for Kevin to enter the email code",
     "Quiktrak: waiting for Kevin's decision"
    ],
@@ -124,6 +124,10 @@
     {
      "at": "2026-11-04T18:05:00Z",
      "text": "Submitted 2 Dice applications (4 total today)"
+    },
+    {
+     "at": "2026-11-04T19:40:00Z",
+     "text": "Submitted Centene (5 total today)"
     }
    ]
   },
@@ -149,7 +153,7 @@
    "salary": "$87,700 - $157,800/yr",
    "source": "Indeed",
    "route": "Company site",
-   "status": "waiting_kevin",
+   "status": "applied",
    "url": "https://www.indeed.com/viewjob?jk=fd8bafe1bc37654d",
    "apply_url": "https://jobs.centene.com/us/en/jobs/1672956/senior-business-technical-analyst/"
   },
