@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T19:44:00Z",
+ "updated": "2026-11-04T19:50:00Z",
  "next_run": "2026-11-05T12:23:00Z",
  "run_date": "2026-11-04",
  "counts": {
@@ -46,6 +46,10 @@
     {
      "at": "2026-11-04T19:40:00Z",
      "text": "Kevin: four companies added to the never-apply list"
+    },
+    {
+     "at": "2026-11-04T19:50:00Z",
+     "text": "Kevin retired Scribe; Captain now keeps the dashboards current"
     }
    ]
   },
@@ -133,18 +137,6 @@
     {
      "at": "2026-11-04T19:40:00Z",
      "text": "Submitted Centene (5 total today)"
-    }
-   ]
-  },
-  "scribe": {
-   "status": "idle",
-   "queue": [
-    "First inbox check: Thu 7:23 AM ET (watch for NBCUniversal and Robert Half replies)"
-   ],
-   "history": [
-    {
-     "at": "2026-11-04T17:39:00Z",
-     "text": "Nothing to track until today: NBCUniversal and Robert Half are the first applications sent"
     }
    ]
   }
