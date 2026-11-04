@@ -81,7 +81,17 @@ canvas{display:block;width:100%;height:100%;position:absolute;inset:0}
 .jobs a.go.muted{background:var(--panel2);color:var(--muted)}
 .drawer .links{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
 .drawer .links a{font-size:11.5px;font-weight:600;color:var(--scout);text-decoration:none;background:#16304a;padding:2px 8px;border-radius:6px}
-.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+.filters .flabel{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin:0 2px 0 8px}
+.filters .flabel:first-child{margin-left:0}
+.filters input[type=date]{font:12px Inter,sans-serif;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:4px 8px;color-scheme:dark}
+.jobs .found{font-size:11px;color:var(--faint);margin-top:2px}
+.jobs td.empty{color:var(--muted);text-align:center;padding:22px 10px}
+.jobs .acts{display:flex;gap:5px;flex-wrap:wrap}
+.jobs .acts a{font-size:11.5px;font-weight:600;text-decoration:none;padding:3px 8px;border-radius:6px;border:1px solid var(--line);color:var(--text);white-space:nowrap}
+.jobs .acts a.ok{border-color:rgba(74,245,160,.5);color:var(--turtle)}
+.jobs .acts a.no{border-color:rgba(255,92,108,.4);color:#e48b95}
+.jobs .pend{font-size:11px;color:var(--kevin);margin-top:4px;max-width:200px}
 .filters button{padding:5px 10px;font-size:12px}
 .top{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
 .top li{display:grid;grid-template-columns:36px 1fr;gap:8px;align-items:center;font-size:12.5px}
@@ -114,11 +124,13 @@ footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
   .jobs table,.jobs tbody,.jobs tr,.jobs td{display:block}
   .jobs tr{display:grid;grid-template-columns:44px 1fr;gap:2px 8px;padding:10px 0;border-bottom:1px solid #141b30}
   .jobs td{border:0;padding:0}
-  .jobs td.sc{grid-row:1/span 6}
+  .jobs td.sc{grid-row:1/span 7}
   .jobs td:not(.sc){grid-column:2}
   .jobs td.loc,.jobs td.sal{color:var(--muted);font-size:12px}
   .jobs td.st{margin-top:4px;display:flex;gap:8px;align-items:center}
   .jobs td.ap{grid-column:2}
+  .jobs td.act:empty{display:none}
+  .jobs td.empty{grid-column:1/-1}
 }
 @media (max-width:900px){
   main{grid-template-columns:1fr;padding:0 16px 16px}
@@ -173,7 +185,7 @@ footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
   <section class="card jobs">
     <h2 id="jobs-h">Jobs scoring 70+</h2>
     <div class="filters" id="filters"></div>
-    <table><thead><tr><th>Score</th><th>Employer</th><th>Role</th><th>Location</th><th>Salary (as posted)</th><th>Status</th><th>Apply</th></tr></thead><tbody id="jobrows"></tbody></table>
+    <table><thead><tr><th>Score</th><th>Employer</th><th>Role</th><th>Location</th><th>Salary (as posted)</th><th>Status</th><th>Actions</th><th>Apply</th></tr></thead><tbody id="jobrows"></tbody></table>
   </section>
 </main>
 <footer>Built from the job hunt Ledger. Only public posting info is shown here (company, title, location, salary as posted, score); resumes, form answers and keys stay private. <b>Live</b> shows what each agent is doing and waiting on now; <b>Replay</b> plays back today's run. Tap an agent for its queue and history.</footer>
@@ -429,20 +441,40 @@ document.getElementById('msgcrew').onclick=()=>window.open(replyURL('Captain',''
 
 /* ---------- jobs table ---------- */
 const ST = {applied:'Applied',in_progress:'Applying now',waiting_kevin:'Waiting on Kevin',kevin_to_apply:'Dice Easy Apply',queued:'Queued',ready:'Ready to apply',skipped:'Skipped',scored:'Scored',interviewing:'Interviewing',offer:'Offer',rejected:'Rejected',ghosted:'No reply'};
-let filt='all';
+const todayET=()=>new Date().toLocaleDateString('en-CA',{timeZone:'America/New_York'});
+let hidden=new Set(['skipped']), fdate=todayET();
+try{ const v=JSON.parse(localStorage.getItem('kjg-filters')||'null'); if(v){ hidden=new Set(v.hidden); } }catch(e){}
+function saveF(){ try{ localStorage.setItem('kjg-filters',JSON.stringify({hidden:[...hidden]})); }catch(e){} }
+const fmtD=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+function onDate(j){ return fdate==='all' || j.found===fdate || (j.applied_at||'').slice(0,10)===fdate; }
+function actionsFor(j){
+  if(!j.pending) return '';
+  const ag=(AG[j.pending.agent]?.label)||'Turtle', t=j.pending.text;
+  return `<div class="acts"><a class="ok" target="_blank" rel="noopener" href="${esc(replyURL(ag,t,'Done'))}" title="${esc(t)}">Done ✓</a><a class="no" target="_blank" rel="noopener" href="${esc(replyURL(ag,t,'Skip'))}">Skip</a><a target="_blank" rel="noopener" href="${esc(replyURL(ag,t,'Reply'))}">Reply…</a></div><div class="pend">${esc(t.split(':').slice(1).join(':').trim()||t)}</div>`;
+}
 function renderJobs(){
-  const top=DATA.top, cnt=s=>top.filter(j=>s==='all'||(s==='open'?!['applied','skipped'].includes(j.status):j.status===s)).length;
-  document.getElementById('jobs-h').textContent=`Jobs scoring 70+ (${top.length})`;
-  document.getElementById('filters').innerHTML=[['all','All'],['applied','Applied'],['open','Not applied yet'],['skipped','Skipped']]
-    .map(([k,l])=>`<button data-f="${k}" class="${k===filt?'on':''}">${l} · ${cnt(k)}</button>`).join('');
-  document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{filt=b.dataset.f; renderJobs();});
-  const rows=top.filter(j=>filt==='all'||(filt==='open'?!['applied','skipped'].includes(j.status):j.status===filt));
-  document.getElementById('jobrows').innerHTML=rows.map(j=>`<tr>
-    <td class="sc">${j.score}</td><td>${esc(j.company)}</td>
+  const top=DATA.top, inDate=top.filter(onDate);
+  const statuses=[...new Set(top.map(j=>j.status))].sort((a,b)=>(a==='skipped')-(b==='skipped')||(ST[a]||a).localeCompare(ST[b]||b));
+  const rows=inDate.filter(j=>!hidden.has(j.status));
+  document.getElementById('jobs-h').textContent=`Jobs scoring 70+ · showing ${rows.length} of ${top.length}`;
+  const dates=[...new Set(top.map(j=>j.found).filter(Boolean))].sort().reverse();
+  document.getElementById('filters').innerHTML=
+    `<span class="flabel">Status</span>`+statuses.map(st=>`<button data-s="${st}" class="${hidden.has(st)?'':'on'}">${ST[st]||esc(st)} · ${inDate.filter(j=>j.status===st).length}</button>`).join('')+
+    `<span class="flabel">Date</span><button data-d="today" class="${fdate===todayET()?'on':''}">Today</button>`+
+    `<input type="date" id="fdate" value="${fdate==='all'?'':fdate}" max="${todayET()}" aria-label="Pick a date">`+
+    `<button data-d="all" class="${fdate==='all'?'on':''}">All dates</button>`;
+  document.querySelectorAll('#filters button[data-s]').forEach(b=>b.onclick=()=>{ const st=b.dataset.s; hidden.has(st)?hidden.delete(st):hidden.add(st); saveF(); renderJobs(); });
+  document.querySelectorAll('#filters button[data-d]').forEach(b=>b.onclick=()=>{ fdate=b.dataset.d==='all'?'all':todayET(); renderJobs(); });
+  document.getElementById('fdate').onchange=e=>{ fdate=e.target.value||'all'; renderJobs(); };
+  const label = fdate==='all'?'any date':fmtD(fdate);
+  document.getElementById('jobrows').innerHTML = rows.length ? rows.map(j=>`<tr>
+    <td class="sc">${j.score}</td><td>${esc(j.company)}<div class="found">found ${j.found?fmtD(j.found):''}</div></td>
     <td>${j.url?`<a href="${esc(j.url)}" target="_blank" rel="noopener">${esc(j.title)}</a>`:esc(j.title)}</td>
     <td class="loc">${esc(j.location)}</td><td class="sal">${esc(j.salary)}</td>
     <td class="st"><span class="pill ${j.status}">${ST[j.status]||esc(j.status)}</span></td>
-    <td class="ap">${j.apply_url?`<a class="go${['applied','skipped'].includes(j.status)?' muted':''}" href="${esc(j.apply_url)}" target="_blank" rel="noopener">${j.status==='applied'?'View':'Apply'} ↗</a>`:''}</td></tr>`).join('');
+    <td class="act">${actionsFor(j)}</td>
+    <td class="ap">${j.apply_url?`<a class="go${['applied','skipped'].includes(j.status)?' muted':''}" href="${esc(j.apply_url)}" target="_blank" rel="noopener">${j.status==='applied'?'View':'Apply'} ↗</a>`:''}</td></tr>`).join('')
+    : `<tr><td colspan="8" class="empty">No jobs for ${label}${hidden.size?' with these statuses':''}. ${fdate!=='all'?'Try <b>All dates</b>':''}${hidden.size&&fdate!=='all'?' or ':''}${hidden.size?'turn a status back on':''}.</td></tr>`;
 }
 
 function renderAll(){
