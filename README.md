@@ -2,6 +2,8 @@
 
 Animated dashboard of the job hunt agents (Captain, Scout, Tailor, Turtle, Scribe) passing data to each other through the Ledger, served with GitHub Pages.
 
+- `cafe.js`: the "Break room" card under the network view, a 64-second looping scene of the agents on a coffee break (SVG, no images; pauses when off screen, holds still for reduced motion).
+
 - `index.html`: the dashboard (no build step).
 - `data.enc.json`: encrypted snapshot of the Ledger (AES-GCM). The page asks for Kevin's email and password and decrypts it in the browser.
 

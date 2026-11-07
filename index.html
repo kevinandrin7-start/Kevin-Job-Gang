@@ -30,6 +30,17 @@ button.on{border-color:var(--scout);color:var(--scout)}
 main{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;padding:0 24px 24px}
 .stage{position:relative;background:radial-gradient(ellipse at 50% 40%,#0e1530 0%,var(--bg) 70%);border:1px solid var(--line);border-radius:16px;overflow:hidden;height:clamp(560px,calc(100vh - 100px),820px);align-self:start}
 canvas{display:block;width:100%;height:100%;position:absolute;inset:0}
+.left{display:flex;flex-direction:column;gap:16px;min-width:0}
+.left .stage{align-self:stretch;flex:none}
+.cafe{position:relative;flex:1 1 auto;min-height:220px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#151d36;--cafe-bite:#1d2746}
+.cafe svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.cafe h2{position:absolute;left:14px;top:10px;margin:0;z-index:1;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;background:rgba(7,10,18,.55);padding:3px 8px;border-radius:6px}
+.cafe .steam path{animation:steam 2.4s ease-in-out infinite}
+.cafe .cloud{animation:drift 64s linear infinite}
+.cafe .led{animation:blink 1.6s infinite}
+.cafe.still *{animation:none!important}
+@keyframes steam{0%{opacity:0;transform:translateY(3px)}40%{opacity:.8}100%{opacity:0;transform:translateY(-7px)}}
+@keyframes drift{from{transform:translateX(-60px)}to{transform:translateX(330px)}}
 .caption{position:absolute;left:14px;bottom:12px;right:14px;font:400 12px 'JetBrains Mono',monospace;color:var(--muted);pointer-events:none;text-shadow:0 1px 4px #000}
 .side{display:flex;flex-direction:column;gap:16px;min-width:0}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
@@ -166,6 +177,7 @@ footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
   header{padding:16px 16px 10px}
   footer{padding:0 16px 24px}
   .stage{height:640px;position:relative;top:0}
+  .cafe{flex:none;height:240px}
 }
 </style>
 </head>
@@ -190,7 +202,10 @@ footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
   </div>
 </header>
 <main>
-  <div class="stage" id="stage"><canvas id="cv"></canvas><div class="caption" id="caption"></div></div>
+  <div class="left">
+    <div class="stage" id="stage"><canvas id="cv"></canvas><div class="caption" id="caption"></div></div>
+    <section class="cafe" id="cafe" aria-label="Break room"><h2>Break room</h2></section>
+  </div>
   <div class="side">
     <div class="card">
       <h2>Today</h2>
@@ -237,6 +252,7 @@ footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
 <div id="toast" role="status" hidden></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="avatars.js"></script>
+<script src="cafe.js" defer></script>
 <script>
 (async function(){
 const css = n => getComputedStyle(document.documentElement).getPropertyValue('--'+n).trim();

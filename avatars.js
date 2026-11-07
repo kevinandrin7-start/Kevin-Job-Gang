@@ -22,12 +22,14 @@ const wrap=(bg,inner)=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100
   <defs><radialGradient id="g" cx="50%" cy="38%" r="65%"><stop offset="0" stop-color="${bg}" stop-opacity=".55"/><stop offset="1" stop-color="#0b1020"/></radialGradient></defs>
   <circle cx="50" cy="50" r="50" fill="url(#g)"/>${inner}</svg>`;
 
-const A = {
+// Each agent is split into the bust (portrait only) and the head (also reused by the break-room scene in cafe.js).
+const part=(bg,bust,head)=>({bg,bust,head});
+const P = {
   // Captain: navy officer's coat with gold trim, peaked cap with a star, spiky copper hair, confident grin.
-  captain: wrap('#f5b84a', `
+  captain: part('#f5b84a', `
     <path d="M14 104 q4 -24 36 -24 q32 0 36 24z" fill="#1d2a52"/>
     <path d="M38 80 l12 14 l12 -14" fill="none" stroke="#f5b84a" stroke-width="3"/>
-    <circle cx="50" cy="98" r="2.2" fill="#f5b84a"/>${neck}
+    <circle cx="50" cy="98" r="2.2" fill="#f5b84a"/>`, `
     <path d="M26 60 q-3 -26 24 -28 q27 2 24 28 l-4 -10 l-4 8 l-4 -11 l-5 9 l-4 -10 l-5 10 l-4 -9 l-4 11 l-4 -8z" fill="#b8562a"/>
     ${face}
     <path d="M28 54 l4 -14 l5 9 l5 -12 l4 10 l6 -11 l4 11 l5 -10 l4 12 l5 -8 l2 13 q-22 -12 -44 0z" fill="#c8642a"/>
@@ -39,9 +41,9 @@ const A = {
     <path d="M43 72 q7 6 14 0" fill="#fff" stroke="${LINE}" stroke-width="1.6" stroke-linejoin="round"/>`),
 
   // Scout: explorer with aviator goggles pushed up on messy dark-teal hair, cyan scarf, curious eyes.
-  scout: wrap('#4ad6f5', `
+  scout: part('#4ad6f5', `
     <path d="M14 104 q4 -24 36 -24 q32 0 36 24z" fill="#2c4f5e"/>
-    <path d="M30 82 q20 10 40 0 l2 8 q-22 10 -44 0z" fill="#4ad6f5"/><path d="M58 86 l8 16 l-8 -2z" fill="#3bb4d0"/>${neck}
+    <path d="M30 82 q20 10 40 0 l2 8 q-22 10 -44 0z" fill="#4ad6f5"/><path d="M58 86 l8 16 l-8 -2z" fill="#3bb4d0"/>`, `
     ${face}
     <path d="M25 58 q-4 -32 25 -32 q30 0 25 32 q-3 -10 -8 -14 q-2 6 -8 6 q2 -6 -2 -9 q-4 7 -10 6 q3 -5 0 -8 q-6 8 -14 9 q-6 2 -8 10z" fill="#1e3a4f"/>
     <path d="M24 42 q26 -10 52 0" stroke="#3a3a46" stroke-width="5" fill="none"/>
@@ -53,11 +55,11 @@ const A = {
     <path d="M54 70 l3 -1" stroke="${LINE}" stroke-width="1.2"/>`),
 
   // Tailor: long violet hair, round glasses, a needle-and-thread hairpin, measuring tape around the neck.
-  tailor: wrap('#b98cff', `
+  tailor: part('#b98cff', `
     <path d="M22 58 q-6 30 -4 46 h64 q2 -16 -4 -46z" fill="#5a3290"/>
     <path d="M14 104 q4 -24 36 -24 q32 0 36 24z" fill="#efe6ff"/>
     <path d="M30 84 q8 6 6 20 M70 84 q-8 6 -6 20" stroke="#ffd34d" stroke-width="5" fill="none"/>
-    <path d="M31 88 h4 M32 93 h4 M33 98 h4 M65 88 h4 M64 93 h4 M63 98 h4" stroke="#7a5a00" stroke-width="1"/>${neck}
+    <path d="M31 88 h4 M32 93 h4 M33 98 h4 M65 88 h4 M64 93 h4 M63 98 h4" stroke="#7a5a00" stroke-width="1"/>`, `
     ${face}
     <path d="M24 64 q-6 -36 26 -36 q32 0 26 36 q-4 -18 -16 -22 q-10 8 -26 6 q-6 4 -10 16z" fill="#6b3fa0"/>
     <path d="M36 40 q8 -8 22 -6" stroke="#8e64c9" stroke-width="2" fill="none" opacity=".8"/>
@@ -70,9 +72,9 @@ const A = {
     <path d="M46 73 q4 3 8 0" fill="none" stroke="${LINE}" stroke-width="1.6" stroke-linecap="round"/>`),
 
   // Turtle: steady, unhurried form-filler in a turtle-shell hood with a headset mic, calm smiling eyes.
-  turtle: wrap('#4af5a0', `
+  turtle: part('#4af5a0', `
     <path d="M14 104 q4 -24 36 -24 q32 0 36 24z" fill="#2f8f5b"/>
-    <path d="M42 82 h16 v22 h-16z" fill="#bff5d8" opacity=".9"/>${neck}
+    <path d="M42 82 h16 v22 h-16z" fill="#bff5d8" opacity=".9"/>`, `
     <path d="M20 66 q-6 -46 30 -46 q36 0 30 46 q-8 -6 -10 -16 h-40 q-2 10 -10 16z" fill="#2f8f5b"/>
     <path d="M30 34 l10 -6 l10 4 l10 -4 l10 6 M36 46 l4 -10 l10 -4 l10 4 l4 10 M50 32 v-10" stroke="#1d6b42" stroke-width="2" fill="none" stroke-linejoin="round"/>
     ${face}
@@ -84,11 +86,11 @@ const A = {
     <path d="M26 66 q2 10 14 9" stroke="#2a2a33" stroke-width="2" fill="none"/><circle cx="41" cy="75" r="2.2" fill="#4af5a0"/>`),
 
   // Scribe: record-keeper with pink twin buns, a quill tucked behind the ear and a little notebook.
-  scribe: wrap('#ff7eb6', `
+  scribe: part('#ff7eb6', `
     <path d="M14 104 q4 -24 36 -24 q32 0 36 24z" fill="#7a2d55"/>
     <path d="M40 80 l10 10 l10 -10" fill="#fff" stroke="#fff" stroke-width="1"/>
     <rect x="58" y="86" width="16" height="14" rx="2" fill="#fff4f9" transform="rotate(-10 66 93)"/>
-    <path d="M61 91 h10 M61 95 h8" stroke="#ff7eb6" stroke-width="1.2" transform="rotate(-10 66 93)"/>${neck}
+    <path d="M61 91 h10 M61 95 h8" stroke="#ff7eb6" stroke-width="1.2" transform="rotate(-10 66 93)"/>`, `
     <circle cx="27" cy="30" r="10" fill="#d9548c"/><circle cx="73" cy="30" r="10" fill="#d9548c"/>
     <path d="M25 62 q-4 -34 25 -34 q29 0 25 34 q-3 -8 -6 -10 v12 q-2 -14 -8 -20 q-10 6 -26 4 q-4 6 -6 14 v-10 q-3 2 -4 10z" fill="#e8679f"/>
     ${face}
@@ -99,6 +101,8 @@ const A = {
     <path d="M46 72 q4 3.5 8 0" fill="none" stroke="${LINE}" stroke-width="1.6" stroke-linecap="round"/>`),
 };
 
+const A = Object.fromEntries(Object.entries(P).map(([k,p])=>[k,wrap(p.bg,p.bust+neck+p.head)]));
 window.AVATAR_SVG = A;
+window.AVATAR_PARTS = P;
 window.AVATAR_URL = Object.fromEntries(Object.entries(A).map(([k,s])=>[k,'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s)]));
 })();
