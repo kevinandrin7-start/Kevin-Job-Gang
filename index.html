@@ -15,6 +15,7 @@
   --source:#7b8bb5; --ledger:#e8ecf7; --kevin:#ffd76a; --bad:#ff5c6c;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px 10px;flex-wrap:wrap}
 h1{font-size:20px;margin:0;font-weight:700;letter-spacing:-.01em}
@@ -117,6 +118,34 @@ canvas{display:block;width:100%;height:100%;position:absolute;inset:0}
 .drawer .acts a{font-size:11.5px;font-weight:600;text-decoration:none;padding:3px 9px;border-radius:6px;border:1px solid var(--line);color:var(--text);background:var(--panel)}
 .drawer .acts a.ok{border-color:rgba(74,245,160,.5);color:var(--turtle)}
 .drawer .acts a.no{border-color:rgba(255,92,108,.4);color:#e48b95}
+.acts button{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:6px;border:1px solid var(--line);color:var(--text);background:var(--panel)}
+.acts button.ok{border-color:rgba(74,245,160,.5);color:var(--turtle)}
+.acts button.no{border-color:rgba(255,92,108,.4);color:#e48b95}
+.notes{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;max-height:300px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.notes li{font-size:12.5px;line-height:1.4;padding:7px 10px;border-radius:10px;background:var(--panel2)}
+.notes .who{font:500 11px 'JetBrains Mono',monospace;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.notes .st{font-family:Inter,sans-serif;font-weight:600;font-size:10.5px;padding:1px 7px;border-radius:9px;border:1px solid var(--line)}
+.notes .st.new{color:var(--kevin);border-color:rgba(255,215,106,.4)}
+.notes .st.seen{color:var(--scout);border-color:rgba(74,214,245,.4)}
+.notes .st.handled{color:var(--turtle);border-color:rgba(74,245,160,.4)}
+.notes .ans{margin-top:5px;padding-left:8px;border-left:2px solid var(--turtle);color:var(--text)}
+.notes .none,.notes-off{font-size:12.5px;color:var(--faint)}
+.notes-off button{margin-top:6px}
+#replydlg{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:18px;width:min(420px,calc(100vw - 32px))}
+#replydlg::backdrop{background:rgba(3,5,10,.7)}
+#replydlg form{display:flex;flex-direction:column;gap:10px;margin:0}
+#replydlg h3{margin:0;font-size:15px}
+#replydlg .it{font-size:12.5px;color:var(--muted)}
+#replydlg label{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:5px}
+#replydlg select,#replydlg textarea{font:13px Inter,sans-serif;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:9px 10px;color-scheme:dark}
+#replydlg textarea{min-height:90px;resize:vertical}
+#replydlg .kinds{display:flex;gap:6px}
+#replydlg .kinds button.on{border-color:var(--scout);color:var(--scout)}
+#replydlg .btns{display:flex;justify-content:flex-end;gap:8px}
+#replydlg .send{background:var(--scout);color:#04131a;border:0;font-weight:600}
+#replydlg .err{color:var(--bad);font-size:12px;min-height:14px}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#14203a;border:1px solid var(--line);color:var(--text);font-size:13px;padding:9px 14px;border-radius:10px;z-index:60;box-shadow:0 6px 24px #000a}
+#toast[hidden]{display:none}
 .drawer .hint{font-size:11.5px;color:var(--faint);margin-top:8px;line-height:1.4}
 footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
 @media (max-width:700px){
@@ -172,6 +201,10 @@ footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
         <div class="stat"><b id="s-wait">0</b><span>on Kevin</span></div>
       </div>
     </div>
+    <div class="card" id="notescard" hidden>
+      <h2>Your notes to the crew</h2>
+      <ul class="notes" id="notes"></ul>
+    </div>
     <div class="card">
       <h2>Agent chatter</h2>
       <div class="chat" id="chat"></div>
@@ -190,6 +223,19 @@ footer{padding:0 24px 28px;color:var(--faint);font-size:12px;line-height:1.5}
 </main>
 <footer>Built from the job hunt Ledger. Only public posting info is shown here (company, title, location, salary as posted, score); resumes, form answers and keys stay private. <b>Live</b> shows what each agent is doing and waiting on now; <b>Replay</b> plays back today's run. Tap an agent for its queue and history.</footer>
 
+<dialog id="replydlg">
+  <form method="dialog" id="replyform">
+    <h3 id="rd-title">Message the crew</h3>
+    <div class="it" id="rd-item"></div>
+    <label id="rd-agentrow">To<select id="rd-agent"><option>Captain</option><option>Scout</option><option>Tailor</option><option>Turtle</option></select></label>
+    <div class="kinds" id="rd-kinds"><button type="button" data-k="Done" class="ok">Done ✓</button><button type="button" data-k="Skip" class="no">Skip</button><button type="button" data-k="Reply">Reply</button></div>
+    <label>Note (optional for Done and Skip)<textarea id="rd-note" maxlength="4000" placeholder="Anything the crew should know"></textarea></label>
+    <div class="err" id="rd-err"></div>
+    <div class="btns"><button type="button" id="rd-cancel">Cancel</button><button type="submit" class="send" id="rd-send">Send</button></div>
+  </form>
+</dialog>
+<div id="toast" role="status" hidden></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="avatars.js"></script>
 <script>
 (async function(){
@@ -211,6 +257,19 @@ async function decrypt(enc,raw){
   const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64d(enc.iv)},key,b64d(enc.ct));
   return JSON.parse(new TextDecoder().decode(pt));
 }
+/* ---------- backend: Supabase (replies to the crew) ---------- */
+// Publishable key only: safe in a public page. Row-level security lets only Kevin's account read or send replies.
+const SB_URL='https://orwflxlzdwavnucmkver.supabase.co', SB_KEY='sb_publishable_5Mmq7H5cXbyVECb4FAoe5g_CGyIT5Mo';
+let sbKeep=(()=>{ try{ return !!localStorage.getItem(KEYNAME); }catch(e){ return false; } })();
+const sbStore={ getItem(k){ try{ return sessionStorage.getItem(k)??localStorage.getItem(k); }catch(e){ return null; } },
+  setItem(k,v){ try{ (sbKeep?localStorage:sessionStorage).setItem(k,v); }catch(e){} },
+  removeItem(k){ try{ sessionStorage.removeItem(k); localStorage.removeItem(k); }catch(e){} } };
+const SB = (SB_KEY && window.supabase) ? window.supabase.createClient(SB_URL,SB_KEY,{auth:{storage:sbStore,persistSession:true,autoRefreshToken:true}}) : null;
+let sbUser=null, sbErr='';
+async function backendSignIn(email,pw,keep){
+  if(!SB) return; sbKeep=keep;
+  try{ const {data,error}=await SB.auth.signInWithPassword({email:email.trim().toLowerCase(),password:pw}); if(error) sbErr=error.message; else sbUser=data.user; }catch(e){ sbErr=String(e.message||e); }
+}
 let DATA, locked=false;
 async function load(){
   let enc=null; try{ enc=await fetchJSON('data.enc.json'); }catch(e){}
@@ -227,13 +286,14 @@ function askLogin(enc){
   return new Promise(res=>{
     f.onsubmit=async ev=>{ ev.preventDefault(); err.textContent=''; go.disabled=true; go.textContent='Checking…';
       try{ const raw=await deriveKey(document.getElementById('lk-email').value,document.getElementById('lk-pw').value,enc);
-        const d=await decrypt(enc,raw); store.set(b64e(raw),document.getElementById('lk-keep').checked);
+        const d=await decrypt(enc,raw), keep=document.getElementById('lk-keep').checked; store.set(b64e(raw),keep);
+        await backendSignIn(document.getElementById('lk-email').value,document.getElementById('lk-pw').value,keep);
         document.getElementById('lk-pw').value=''; lock.hidden=true; res(d);
       }catch(e){ err.textContent='That email and password don\'t match.'; }
       go.disabled=false; go.textContent='Sign in'; };
   });
 }
-document.getElementById('signout').onclick=()=>{ store.clear(); location.reload(); };
+document.getElementById('signout').onclick=async()=>{ store.clear(); try{ if(SB) await SB.auth.signOut(); }catch(e){} location.reload(); };
 try { await load(); } catch(e){ document.getElementById('caption').textContent='Could not load the dashboard data.'; return; }
 
 /* ---------- graph ---------- */
@@ -419,25 +479,87 @@ function renderAgents(){
   detail.style.setProperty('--c',c);
   const linksFor=x=>{ const L=DATA.top.filter(j=>j.apply_url && x.toLowerCase().includes(j.company.split(/[ ,.-]/)[0].toLowerCase()));
     return L.length?`<div class="links">${L.map(j=>`<a href="${esc(j.apply_url)}" target="_blank" rel="noopener">${esc(j.company.split(/[,.]/)[0])} ↗</a>`).join('')}</div>`:''; };
-  const acts=x=>`<div class="acts"><a class="ok" target="_blank" rel="noopener" href="${esc(replyURL(AG[k].label,x,'Done'))}">Done ✓</a><a class="no" target="_blank" rel="noopener" href="${esc(replyURL(AG[k].label,x,'Skip'))}">Skip</a><a target="_blank" rel="noopener" href="${esc(replyURL(AG[k].label,x,'Reply'))}">Reply…</a></div>`;
+  const acts=x=>actBtns(AG[k].label,x,(DATA.top.find(j=>j.pending&&j.pending.text===x)||{}).job_id);
   const q=(st.queue||[]).map(x=>`<li class="q">${esc(x)}${linksFor(x)}${acts(x)}</li>`).join('') || '<div class="none">Nothing pending.</div>';
   const h=(st.history||[]).slice().sort((a,b)=>a.at<b.at?1:-1).map(x=>`<li><time>${fmtT(x.at)}</time>${esc(x.text)}</li>`).join('') || '<div class="none">No actions yet.</div>';
   detail.innerHTML=`<div class="head"><img src="${AVATAR_URL[k]}" alt=""><div><strong style="color:${c}">${AG[k].label}</strong> <span style="font-family:JetBrains Mono,monospace;font-size:11px">${AG[k].sub}</span><br>${AG[k].role}</div></div>
-    <h3>Pending (${(st.queue||[]).length})</h3><ul>${q}</ul>${(st.queue||[]).length?'<div class="hint">Done, Skip and Reply open a ready-made note on GitHub. Tap Submit and the crew picks it up within a few minutes. Codes and passwords go into the job site itself, never into the note.</div>':''}<h3>Past actions</h3><ul>${h}</ul>`;
+    <h3>Pending (${(st.queue||[]).length})</h3><ul>${q}</ul>${(st.queue||[]).length?`<div class="hint">${live()?'Done, Skip and Reply go straight to the crew, privately. Skip on a job takes it off the apply queue right away.':'Done, Skip and Reply open a ready-made note on GitHub.'} Codes and passwords go into the job site itself, never into the note.</div>`:''}<h3>Past actions</h3><ul>${h}</ul>`;
 }
 function select(k){ selected=k; renderAgents(); NODES[k].act=1; }
 cv.addEventListener('click',ev=>{ const r=cv.getBoundingClientRect(),x=ev.clientX-r.left,y=ev.clientY-r.top;
   for(const k in AG){ const n=NODES[k]; if(Math.hypot(n.x-x,n.y-y)<34){ select(k); if(innerWidth<900) detail.scrollIntoView({behavior:'smooth',block:'center'}); return; } } });
 
-/* ---------- replies to agents: prefilled GitHub issues ---------- */
+/* ---------- replies to agents: straight to the backend ---------- */
 const REPO='https://github.com/kevinandrin7-start/Kevin-Job-Gang';
-function replyURL(agent,item,reply){
+function replyURL(agent,item,reply){   // fallback only, when the backend isn't set up
   const short=(item||'').split(':')[0].slice(0,60);
   const title=`[${agent}] ${reply==='Reply'?'Reply':reply}${short?': '+short:''}`;
   const body=`Agent: ${agent}\nItem: ${short||'(general message)'}\nReply: ${reply==='Reply'?'':reply}\n\n<!-- Write any extra note above. This repo is public: never put codes, passwords or personal details here. -->`;
   return `${REPO}/issues/new?labels=agent-reply&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
 }
-document.getElementById('msgcrew').onclick=()=>window.open(replyURL('Captain','', 'Reply'),'_blank','noopener');
+const live=()=>!!(SB&&sbUser);
+function actBtns(agent,item,jobId,kinds=['Done','Skip','Reply']){
+  const lab={Done:'Done ✓',Skip:'Skip',Reply:'Reply…'}, cls={Done:'ok',Skip:'no',Reply:''};
+  return `<div class="acts">${kinds.map(k=>`<button type="button" class="${cls[k]}" data-act="${k}" data-agent="${esc(agent)}" data-item="${esc(item||'')}" data-job="${esc(jobId||'')}">${lab[k]}</button>`).join('')}</div>`;
+}
+let toastT; function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>el.hidden=true,3500); }
+const dlg=document.getElementById('replydlg'); let rd={};
+function setKind(k){ rd.kind=k; document.querySelectorAll('#rd-kinds button').forEach(b=>b.classList.toggle('on',b.dataset.k===k)); }
+document.querySelectorAll('#rd-kinds button').forEach(b=>b.onclick=()=>setKind(b.dataset.k));
+function openReply(agent,item,jobId,kind){
+  if(!live()){
+    if(SB && locked){ toast('Sign in again to send notes.'); return; }
+    window.open(replyURL(agent||'Captain',item,kind),'_blank','noopener'); return;
+  }
+  rd={agent:agent||'Captain',item:item||'',job:jobId||''};
+  document.getElementById('rd-title').textContent=item?`Reply to ${rd.agent}`:'Message the crew';
+  document.getElementById('rd-item').textContent=item||'';
+  document.getElementById('rd-agentrow').hidden=!!item; document.getElementById('rd-agent').value=rd.agent;
+  document.getElementById('rd-kinds').hidden=!item;
+  setKind(item?kind:'Reply');
+  document.getElementById('rd-note').value=''; document.getElementById('rd-err').textContent='';
+  dlg.showModal(); (kind==='Reply'||!item?document.getElementById('rd-note'):document.getElementById('rd-send')).focus();
+}
+document.getElementById('rd-cancel').onclick=()=>dlg.close();
+document.getElementById('replyform').onsubmit=async ev=>{
+  ev.preventDefault();
+  const note=document.getElementById('rd-note').value.trim(), err=document.getElementById('rd-err'), btn=document.getElementById('rd-send');
+  if(rd.kind==='Reply'&&!note){ err.textContent='Write a note first.'; return; }
+  const agent=rd.item?rd.agent:document.getElementById('rd-agent').value;
+  btn.disabled=true; btn.textContent='Sending…'; err.textContent='';
+  try{
+    const {data,error}=await SB.rpc('send_reply',{p_agent:agent,p_kind:rd.kind,p_item:rd.item||null,p_job_id:rd.job||null,p_note:note||null});
+    if(error) throw error;
+    dlg.close(); toast(data&&data.answer?data.answer:`Sent to ${agent}.`); loadNotes();
+  }catch(e){ err.textContent='Could not send: '+(e.message||e); }
+  btn.disabled=false; btn.textContent='Send';
+};
+document.addEventListener('click',ev=>{ const b=ev.target.closest('button[data-act]'); if(!b) return;
+  openReply(b.dataset.agent,b.dataset.item,b.dataset.job,b.dataset.act); });
+document.getElementById('msgcrew').onclick=()=>openReply('Captain','','','Reply');
+
+/* ---------- your notes + the crew's answers, live ---------- */
+const RS={new:'Sent',seen:'Seen',handled:'Handled'};
+async function loadNotes(){
+  const card=document.getElementById('notescard'), ul=document.getElementById('notes');
+  if(!SB) return; card.hidden=false;
+  if(!sbUser){ ul.innerHTML=`<li class="notes-off">${sbErr?`Couldn't connect to the crew's inbox (${esc(sbErr)}).`:'Sign in again to send notes straight to the crew.'}<br><button type="button" id="resign">Sign in</button></li>`;
+    document.getElementById('resign').onclick=()=>{ store.clear(); location.reload(); }; return; }
+  const {data,error}=await SB.from('replies').select('*').order('created_at',{ascending:false}).limit(20);
+  if(error){ ul.innerHTML=`<li class="none">Couldn't load your notes.</li>`; return; }
+  ul.innerHTML=data.length?data.map(r=>`<li><div class="who"><span>${esc(r.kind)} → ${esc(r.agent)} · ${fmtT(r.created_at)}</span><span class="st ${esc(r.status)}">${RS[r.status]||esc(r.status)}</span></div>
+    ${r.item?`<div>${esc(r.item)}</div>`:''}${r.note?`<div style="color:var(--muted)">${esc(r.note)}</div>`:''}
+    ${r.answer?`<div class="ans"><b>${esc(r.answered_by||'Crew')}:</b> ${esc(r.answer)}</div>`:''}</li>`).join('')
+    : `<li class="none">Nothing sent yet. Use Done, Skip or Reply, or Message the crew.</li>`;
+}
+async function startBackend(){
+  if(!SB) return;
+  try{ const {data}=await SB.auth.getSession(); sbUser=data.session?data.session.user:null; }catch(e){}
+  SB.auth.onAuthStateChange((_e,sess)=>{ sbUser=sess?sess.user:null; });
+  await loadNotes();
+  if(sbUser) SB.channel('replies').on('postgres_changes',{event:'*',schema:'public',table:'replies'},()=>loadNotes()).subscribe();
+  setInterval(()=>{ if(sbUser) loadNotes(); },60000);
+}
 
 /* ---------- jobs table ---------- */
 const ST = {applied:'Applied',in_progress:'Applying now',waiting_kevin:'Waiting on Kevin',kevin_to_apply:'Dice Easy Apply',queued:'Queued',ready:'Ready to apply',skipped:'Skipped',scored:'Scored',interviewing:'Interviewing',offer:'Offer',rejected:'Rejected',ghosted:'No reply'};
@@ -448,9 +570,9 @@ function saveF(){ try{ localStorage.setItem('kjg-filters',JSON.stringify({hidden
 const fmtD=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
 function onDate(j){ return fdate==='all' || j.found===fdate || (j.applied_at||'').slice(0,10)===fdate; }
 function actionsFor(j){
-  if(!j.pending) return '';
+  if(!j.pending) return (live()&&j.job_id&&['ready','queued'].includes(j.status)) ? actBtns('Turtle',`${j.company}: ${j.title}`,j.job_id,['Skip','Reply']) : '';
   const ag=(AG[j.pending.agent]?.label)||'Turtle', t=j.pending.text;
-  return `<div class="acts"><a class="ok" target="_blank" rel="noopener" href="${esc(replyURL(ag,t,'Done'))}" title="${esc(t)}">Done ✓</a><a class="no" target="_blank" rel="noopener" href="${esc(replyURL(ag,t,'Skip'))}">Skip</a><a target="_blank" rel="noopener" href="${esc(replyURL(ag,t,'Reply'))}">Reply…</a></div><div class="pend">${esc(t.split(':').slice(1).join(':').trim()||t)}</div>`;
+  return actBtns(ag,t,j.job_id)+`<div class="pend">${esc(t.split(':').slice(1).join(':').trim()||t)}</div>`;
 }
 function renderJobs(){
   const top=DATA.top, inDate=top.filter(onDate);
@@ -556,6 +678,7 @@ setInterval(async()=>{ const before=DATA.updated;
        if(DATA.updated!==before) renderAll(); }catch(e){} }, 60000);
 
 resize(); renderAll(); requestAnimationFrame(frame);
+startBackend().then(()=>{ if(live()) renderAll(); });
 })();
 </script>
 </body>
