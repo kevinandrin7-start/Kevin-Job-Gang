@@ -259,7 +259,7 @@ async function decrypt(enc,raw){
 }
 /* ---------- backend: Supabase (replies to the crew) ---------- */
 // Publishable key only: safe in a public page. Row-level security lets only Kevin's account read or send replies.
-const SB_URL='https://orwflxlzdwavnucmkver.supabase.co', SB_KEY='';
+const SB_URL='https://orwflxlzdwavnucmkver.supabase.co', SB_KEY='sb_publishable_5Mmq7H5cXbyVECb4FAoe5g_CGyIT5Mo';
 let sbKeep=(()=>{ try{ return !!localStorage.getItem(KEYNAME); }catch(e){ return false; } })();
 const sbStore={ getItem(k){ try{ return sessionStorage.getItem(k)??localStorage.getItem(k); }catch(e){ return null; } },
   setItem(k,v){ try{ (sbKeep?localStorage:sessionStorage).setItem(k,v); }catch(e){} },
