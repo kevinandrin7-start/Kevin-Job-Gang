@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=/mnt/project-files/job-hunt/tools/resume_hook.py; [ -f \"$f\" ] || exit 0; python3 \"$f\"",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}
